@@ -1,6 +1,8 @@
 import Image from "next/image";
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
 import placeholderImage from "../image-placeholder.png";
+import FadeInHeadline from "./fade-in-headline";
+import RevealSection from "./reveal-section";
 import ThemeToggle from "./theme-toggle";
 
 const navigation = [
@@ -93,19 +95,41 @@ const heroNumber2Settings = {
   inkColor: "var(--foreground)",
 };
 
+const heroHeadline = [
+  { text: "I'm" },
+  { text: "Miguel," },
+  { text: "a" },
+  { text: "designer", className: "text-opacity" },
+  { text: "and" },
+  { text: "outdoor", className: "text-opacity", breakAfter: true },
+  { text: "enthusiast", className: "text-opacity" },
+  { text: "based" },
+  { text: "in" },
+  { text: "Madeira", className: "text-opacity" },
+  { text: "Island.", className: "text-opacity" },
+];
+
 type WorkCardProps = {
   title: string;
   meta: string;
   art: string;
   href: string;
+  tooltipLabel?: string;
 };
 
-function WorkCard({ title, meta, art, href }: WorkCardProps) {
+function WorkCard({
+  title,
+  meta,
+  art,
+  href,
+  tooltipLabel = "View Case Study",
+}: WorkCardProps) {
   return (
     <a
       className="group flex flex-col gap-3"
       href={href}
       aria-label={title}
+      data-cursor-label={tooltipLabel}
     >
       <div className="portfolio-card__art" data-art={art}>
         <Image
@@ -117,7 +141,7 @@ function WorkCard({ title, meta, art, href }: WorkCardProps) {
         />
       </div>
       <div className="space-y-0.5">
-        <p className="font-editorial text-[1rem] leading-[1.5] text-foreground transition-colors duration-300 group-hover:text-accent">
+        <p className="font-editorial text-[1rem] leading-[1.5] text-foreground">
           {title}
         </p>
         <p className="text-[0.875rem] leading-[1.5] text-opacity">{meta}</p>
@@ -167,27 +191,28 @@ export default function Home() {
       <div className="portfolio-shell mx-auto w-full max-w-[900px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
         <div className="flex flex-col gap-12 md:gap-20 xl:gap-12">
           <section className="flex flex-col gap-6">
-            <div className="hero-halftone" aria-hidden="true">
+            <RevealSection
+              as="div"
+              className="hero-halftone"
+              delay={120}
+              aria-hidden="true"
+            >
               <HalftoneExport
                 settings={heroNumber2Settings}
                 hoverInkColor="var(--accent)"
                 enableInteraction={false}
               />
-            </div>
+            </RevealSection>
 
             <div className="space-y-5">
-              <h1 className="font-editorial max-w-[44rem] text-[2rem] leading-[1.45] text-foreground">
-                I&apos;m Miguel, a <span className="text-opacity">designer</span>{" "}
-                and <span className="text-opacity">outdoor</span>
-                <br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>
-                <span className="text-opacity">enthusiast</span> based in{" "}
-                <span className="text-opacity">Madeira Island.</span>
-              </h1>
+              <FadeInHeadline
+                className="font-editorial max-w-[44rem] text-[2rem] leading-[1.45] text-foreground"
+                tokens={heroHeadline}
+              />
             </div>
           </section>
 
-          <section
+          <RevealSection
             id="about"
             className="grid gap-10 md:grid-cols-[minmax(0,311px)_minmax(0,444px)] md:justify-between"
           >
@@ -230,9 +255,12 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </section>
+          </RevealSection>
 
-          <section id="selected-work" className="flex flex-col gap-8">
+          <RevealSection
+            id="selected-work"
+            className="flex flex-col gap-8"
+          >
             <SectionLabel
               action={
                 <a
@@ -251,9 +279,9 @@ export default function Home() {
                 <WorkCard key={item.title} {...item} />
               ))}
             </div>
-          </section>
+          </RevealSection>
 
-          <section id="playground" className="flex flex-col gap-8">
+          <RevealSection id="playground" className="flex flex-col gap-8">
             <SectionLabel>Playground</SectionLabel>
             <p className="text-[1rem] leading-[1.5] text-foreground">
               Personal Work · 2024
@@ -264,7 +292,7 @@ export default function Home() {
                 <WorkCard key={item.title} {...item} />
               ))}
             </div>
-          </section>
+          </RevealSection>
         </div>
       </div>
     </main>
