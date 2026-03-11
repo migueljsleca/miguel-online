@@ -1,0 +1,32 @@
+:root {
+  color-scheme: light;
+  --background: #fafcfd;
+  --foreground: #151515;
+  --accent: #e54613;
+  --opacity: #1515158c;
+  --white: #fafcfd;
+  --black: #151515;
+  --theme-transition-x: 50vw;
+  --theme-transition-y: 50vh;
+  --theme-transition-radius: 0px;
+}
+
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #151515;
+  --foreground: #fafcfd;
+  --accent: #e54613;
+  --opacity: #fafcfd8c;
+  --white: #fafcfd;
+  --black: #151515;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-opacity: var(--opacity);
+  --color-white: var(--white);
+  --color-black: var(--black);
+}

@@ -1,0 +1,26 @@
+{
+  "source": {
+    "name": "Untitled",
+    "fileKey": "kuGYQC6xBKoEXKHywUwTwp",
+    "exportedAt": "2026-03-10"
+  },
+  "collections": {
+    "primitives": {
+      "white": "#FAFCFD",
+      "black": "#151515",
+      "accent": "#E54613"
+    },
+    "theme": {
+      "light": {
+        "background": "#FAFCFD",
+        "foreground": "#151515",
+        "opacity": "#1515158C"
+      },
+      "dark": {
+        "background": "#151515",
+        "foreground": "#FAFCFD",
+        "opacity": "#FAFCFD8C"
+      }
+    }
+  }
+}

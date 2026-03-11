@@ -1,65 +1,272 @@
 import Image from "next/image";
+import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
+import placeholderImage from "../image-placeholder.png";
+import ThemeToggle from "./theme-toggle";
+
+const navigation = [
+  { label: "Home", href: "#home" },
+  { label: "Selected Work", href: "#selected-work" },
+  { label: "Playground", href: "#playground" },
+  { label: "About", href: "#about" },
+];
+
+const stats: { value: React.ReactNode; label: string }[] = [
+  { value: "5+", label: "Years of experience" },
+  {
+    value: (
+      <svg
+        aria-hidden="true"
+        className="portfolio-inline-icon"
+        viewBox="0 0 256 256"
+      >
+        <path d="M248,128a56,56,0,0,1-95.6,39.6l-.33-.35L92.12,99.55a40,40,0,1,0,0,56.9l8.52-9.62a8,8,0,1,1,12,10.61l-8.69,9.81-.33.35a56,56,0,1,1,0-79.2l.33.35,59.95,67.7a40,40,0,1,0,0-56.9l-8.52,9.62a8,8,0,1,1-12-10.61l8.69-9.81.33-.35A56,56,0,0,1,248,128Z" />
+      </svg>
+    ),
+    label: "Tools tested",
+  },
+  { value: "12,309.6", label: "km covered" },
+];
+
+const experience = [
+  { studio: "Superside", role: "UX/UI Designer", years: "2024 - Now" },
+  { studio: "Independent Practice", role: "Designer", years: "2020 - Now" },
+  { studio: "chumbo", role: "Designer", years: "2021 - 2024" },
+];
+
+const selectedWork = [
+  {
+    title: "EKN Engineering",
+    meta: "Personal Work · 2024",
+    art: "ekn",
+    href: "#",
+  },
+  {
+    title: "Vimeo Email System",
+    meta: "Personal Work · 2024",
+    art: "vimeo",
+    href: "#",
+  },
+  {
+    title: "Madeira Trails Atlas",
+    meta: "Concept Build · 2023",
+    art: "atlas",
+    href: "#",
+  },
+  {
+    title: "Relay Dashboard",
+    meta: "Client Work · 2023",
+    art: "relay",
+    href: "#",
+  },
+];
+
+const playground = [
+  {
+    title: "Signal Posters",
+    meta: "Typography Studies · 2024",
+    art: "posters",
+    href: "#",
+  },
+  {
+    title: "Coastline Frames",
+    meta: "Motion Snippets · 2024",
+    art: "coast",
+    href: "#",
+  },
+  {
+    title: "Orbit Marks",
+    meta: "Identity Drafts · 2023",
+    art: "orbit",
+    href: "#",
+  },
+  {
+    title: "Field Notes",
+    meta: "Photo Essays · 2023",
+    art: "notes",
+    href: "#",
+  },
+];
+
+const heroNumber2Settings = {
+  pageBackground: "var(--background)",
+  paperColor: "var(--background)",
+  inkColor: "var(--foreground)",
+};
+
+type WorkCardProps = {
+  title: string;
+  meta: string;
+  art: string;
+  href: string;
+};
+
+function WorkCard({ title, meta, art, href }: WorkCardProps) {
+  return (
+    <a
+      className="group flex flex-col gap-3"
+      href={href}
+      aria-label={title}
+    >
+      <div className="portfolio-card__art" data-art={art}>
+        <Image
+          src={placeholderImage}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 438px, 100vw"
+          className="portfolio-card__image"
+        />
+      </div>
+      <div className="space-y-0.5">
+        <p className="font-editorial text-[1rem] leading-[1.5] text-foreground transition-colors duration-300 group-hover:text-accent">
+          {title}
+        </p>
+        <p className="text-[0.875rem] leading-[1.5] text-opacity">{meta}</p>
+      </div>
+    </a>
+  );
+}
+
+function SectionLabel({
+  children,
+  action,
+}: {
+  children: React.ReactNode;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-6">
+      <p className="font-data text-[0.75rem] uppercase text-opacity">
+        {children}
+      </p>
+      {action}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <main
+      id="home"
+      className="min-h-screen bg-background text-foreground"
+    >
+      <aside className="portfolio-rail-wrap">
+        <nav aria-label="Primary" className="portfolio-rail">
+          {navigation.map((item) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              key={item.label}
+              className="portfolio-rail__link"
+              href={item.href}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              {item.label}
+            </a>
+          ))}
+          <ThemeToggle />
+        </nav>
+      </aside>
+
+      <div className="portfolio-shell mx-auto w-full max-w-[900px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
+        <div className="flex flex-col gap-12 md:gap-20 xl:gap-12">
+          <section className="flex flex-col gap-6">
+            <div className="hero-halftone" aria-hidden="true">
+              <HalftoneExport
+                settings={heroNumber2Settings}
+                hoverInkColor="var(--accent)"
+                enableInteraction={false}
+              />
+            </div>
+
+            <div className="space-y-5">
+              <h1 className="font-editorial max-w-[44rem] text-[2rem] leading-[1.45] text-foreground">
+                I&apos;m Miguel, a <span className="text-opacity">designer</span>{" "}
+                and <span className="text-opacity">outdoor</span>
+                <br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>
+                <span className="text-opacity">enthusiast</span> based in{" "}
+                <span className="text-opacity">Madeira Island.</span>
+              </h1>
+            </div>
+          </section>
+
+          <section
+            id="about"
+            className="grid gap-10 md:grid-cols-[minmax(0,311px)_minmax(0,444px)] md:justify-between"
+          >
+            <div className="space-y-3">
+              <SectionLabel>At a Glance</SectionLabel>
+              <div className="space-y-4">
+                {stats.map((item) => (
+                  <div key={item.label} className="space-y-0.5">
+                    <p className="text-[0.9375rem] leading-[1.5] text-foreground">
+                      {item.value}
+                    </p>
+                    <p className="text-[0.875rem] leading-[1.5] text-opacity">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <SectionLabel>Experience</SectionLabel>
+              <div className="space-y-4">
+                {experience.map((item) => (
+                  <div
+                    key={`${item.studio}-${item.years}`}
+                    className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-0.5"
+                  >
+                    <div className="space-y-0.5">
+                      <p className="text-[0.9375rem] leading-[1.5] text-foreground">
+                        {item.studio}
+                      </p>
+                      <p className="text-[0.875rem] leading-[1.5] text-opacity">
+                        {item.role}
+                      </p>
+                    </div>
+                    <p className="pt-0.5 text-right text-[0.875rem] leading-[1.5] text-foreground">
+                      {item.years}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section id="selected-work" className="flex flex-col gap-8">
+            <SectionLabel
+              action={
+                <a
+                  className="portfolio-inline-link font-data text-[0.75rem] uppercase"
+                  href="#selected-work"
+                >
+                  View All
+                </a>
+              }
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Selected Work
+            </SectionLabel>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {selectedWork.map((item) => (
+                <WorkCard key={item.title} {...item} />
+              ))}
+            </div>
+          </section>
+
+          <section id="playground" className="flex flex-col gap-8">
+            <SectionLabel>Playground</SectionLabel>
+            <p className="text-[1rem] leading-[1.5] text-foreground">
+              Personal Work · 2024
+            </p>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {playground.map((item) => (
+                <WorkCard key={item.title} {...item} />
+              ))}
+            </div>
+          </section>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

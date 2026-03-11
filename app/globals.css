@@ -1,26 +1,357 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "../tokens/figma-theme.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-interface);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  view-transition-name: root;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal-circle 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+
+@keyframes theme-reveal-circle {
+  0% {
+    clip-path: circle(2px at var(--theme-transition-x) var(--theme-transition-y));
+  }
+
+  100% {
+    clip-path: circle(
+      var(--theme-transition-radius) at var(--theme-transition-x)
+        var(--theme-transition-y)
+    );
   }
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 8%, transparent) 0, transparent 28%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-interface);
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--white) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--white) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 22px 22px;
+  mask-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--black) 60%, transparent),
+    transparent 72%
+  );
+}
+
+html[data-theme="dark"] body {
+  background: var(--background);
+}
+
+html[data-theme="dark"] body::before {
+  opacity: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-editorial {
+  font-family:
+    var(--font-editorial), "Iowan Old Style", "Palatino Linotype",
+    "Book Antiqua", Georgia, serif;
+}
+
+.font-data {
+  font-family: var(--font-data);
+}
+
+.portfolio-shell {
+  position: relative;
+}
+
+.portfolio-rail-wrap {
+  padding: 3rem 3rem 0;
+}
+
+.portfolio-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 1rem;
+}
+
+.portfolio-rail__link {
+  display: block;
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--opacity);
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.portfolio-rail__link:hover {
+  color: var(--foreground);
+  transform: translateX(3px);
+}
+
+.portfolio-rail__theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 32px;
+  height: 18px;
+  min-width: 0;
+  flex: 0 0 auto;
+  margin-top: 0.85rem;
+  padding: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--black) 10%, var(--white));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--black) 6%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--white) 42%, transparent);
+  overflow: hidden;
+  cursor: pointer;
+  vertical-align: middle;
+  transition:
+    background-color 500ms ease,
+    box-shadow 500ms ease;
+}
+
+.portfolio-rail__theme:hover,
+.portfolio-rail__theme:focus-visible {
+  background: color-mix(in srgb, var(--black) 14%, var(--white));
+}
+
+.portfolio-rail__theme:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--foreground) 72%, transparent);
+  outline-offset: 3px;
+}
+
+html[data-theme="dark"] .portfolio-rail__theme {
+  background: color-mix(in srgb, var(--white) 8%, var(--black));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--white) 4%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--black) 70%, transparent);
+}
+
+html[data-theme="dark"] .portfolio-rail__theme:hover,
+html[data-theme="dark"] .portfolio-rail__theme:focus-visible {
+  background: color-mix(in srgb, var(--white) 11%, var(--black));
+}
+
+.portfolio-rail__theme-knob {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--black) 8%, transparent),
+    0 1px 2px color-mix(in srgb, var(--black) 12%, transparent);
+  transition:
+    background-color 500ms ease,
+    box-shadow 500ms ease,
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] .portfolio-rail__theme-knob {
+  background: color-mix(in srgb, var(--white) 16%, var(--black));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--white) 3%, transparent),
+    0 1px 2px color-mix(in srgb, var(--black) 42%, transparent);
+  transform: translateX(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-rail__theme,
+  .portfolio-rail__theme-knob {
+    transition: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+.portfolio-inline-link {
+  position: relative;
+  transition: color 180ms ease;
+}
+
+.portfolio-inline-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.18rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms ease;
+}
+
+.portfolio-inline-link:hover {
+  color: var(--foreground);
+}
+
+.portfolio-inline-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.portfolio-inline-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+.trail-mark {
+  position: relative;
+  width: 96px;
+  height: 156px;
+  opacity: 0.92;
+}
+
+.hero-halftone {
+  position: relative;
+  width: clamp(3.9rem, 6.8vw, 4.9rem);
+  aspect-ratio: 565 / 720;
+  overflow: hidden;
+  opacity: 0.98;
+  isolation: isolate;
+  filter: saturate(0.88) contrast(1.06);
+}
+
+.trail-mark::before,
+.trail-mark::after {
+  content: "";
+  position: absolute;
+  background:
+    radial-gradient(circle, var(--foreground) 0 1.4px, transparent 1.5px)
+      center / 10px 10px;
+}
+
+.trail-mark::before {
+  inset: 8px 21px 12px 21px;
+  clip-path: polygon(
+    53% 0%,
+    70% 8%,
+    66% 24%,
+    43% 35%,
+    38% 51%,
+    54% 58%,
+    76% 71%,
+    73% 84%,
+    56% 100%,
+    38% 92%,
+    41% 78%,
+    59% 67%,
+    43% 58%,
+    24% 41%,
+    28% 20%
+  );
+}
+
+.trail-mark::after {
+  width: 32px;
+  height: 28px;
+  top: 0;
+  left: 54px;
+  clip-path: polygon(46% 0%, 100% 18%, 81% 100%, 0 77%);
+}
+
+.portfolio-card__art {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 438 / 313;
+  border-radius: 2px;
+  background-color: color-mix(in srgb, var(--foreground) 12%, var(--background));
+}
+
+.portfolio-card__image {
+  object-fit: cover;
+}
+
+@media (min-width: 1280px) {
+  .portfolio-rail-wrap {
+    position: fixed;
+    top: 48px;
+    left: 48px;
+    z-index: 10;
+    padding: 0;
+  }
+
+  .portfolio-rail {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .portfolio-rail__theme {
+    margin-top: 1.1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  body::before {
+    opacity: 0.12;
+  }
+
+  .portfolio-rail {
+    overflow-x: auto;
+    align-items: center;
+    padding-bottom: 0.35rem;
+  }
+
+  .portfolio-rail__theme {
+    margin-top: 0;
+  }
+
+  .trail-mark {
+    width: 82px;
+    height: 132px;
+  }
+
+  .hero-halftone {
+    width: 6.25rem;
+  }
 }
