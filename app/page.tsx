@@ -38,25 +38,25 @@ const experience = [
 
 const selectedWork = [
   {
-    title: "EKN Engineering",
+    title: "Signal Foundry",
     meta: "Personal Work · 2024",
     art: "ekn",
     href: "#",
   },
   {
-    title: "Vimeo Email System",
+    title: "Inbox Rituals",
     meta: "Personal Work · 2024",
     art: "vimeo",
     href: "#",
   },
   {
-    title: "Madeira Trails Atlas",
+    title: "Stone Paths",
     meta: "Concept Build · 2023",
     art: "atlas",
     href: "#",
   },
   {
-    title: "Relay Dashboard",
+    title: "Quiet Metrics",
     meta: "Client Work · 2023",
     art: "relay",
     href: "#",
