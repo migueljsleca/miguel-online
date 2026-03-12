@@ -10,12 +10,18 @@ export const figmaTheme = {
     foreground: "#151515",
     accent: "#E54613",
     opacity: "#1515158C",
+    tileBg: "#FBFCFD",
+    tileStroke: "#F1F3F4",
+    tileFill: "#7C7D7E",
   },
   dark: {
     background: "#151515",
     foreground: "#FAFCFD",
     accent: "#E54613",
     opacity: "#FAFCFD8C",
+    tileBg: "#303030",
+    tileStroke: "#2A2A2A",
+    tileFill: "#939495",
   },
 } as const;
 

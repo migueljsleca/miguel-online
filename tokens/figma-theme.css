@@ -6,6 +6,9 @@
   --opacity: #1515158c;
   --white: #fafcfd;
   --black: #151515;
+  --tile-bg: #fbfcfd;
+  --tile-stroke: #e6e6e6;
+  --tile-fill: #7c7d7e;
   --theme-transition-x: 50vw;
   --theme-transition-y: 50vh;
   --theme-transition-radius: 0px;
@@ -20,6 +23,9 @@
   --opacity: #fafcfd8c;
   --white: #fafcfd;
   --black: #151515;
+  --tile-bg: #303030;
+  --tile-stroke: #2a2a2a;
+  --tile-fill: #939495;
 }
 
 @theme inline {
@@ -29,4 +35,7 @@
   --color-opacity: var(--opacity);
   --color-white: var(--white);
   --color-black: var(--black);
+  --color-tile-bg: var(--tile-bg);
+  --color-tile-stroke: var(--tile-stroke);
+  --color-tile-fill: var(--tile-fill);
 }

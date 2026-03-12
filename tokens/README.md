@@ -16,6 +16,9 @@ Resolved values:
 | `foreground` | `#151515` | `#FAFCFD` |
 | `accent` | `#E54613` | `#E54613` |
 | `opacity` | `#1515158C` | `#FAFCFD8C` |
+| `tileBg` | `#FBFCFD` | `#303030` |
+| `tileStroke` | `#F1F3F4` | `#2A2A2A` |
+| `tileFill` | `#7C7D7E` | `#939495` |
 
 Primitives:
 

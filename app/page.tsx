@@ -73,14 +73,28 @@ const heroHeadline = [
   { text: "I'm" },
   { text: "Miguel," },
   { text: "a" },
-  { text: "designer", className: "text-opacity" },
+  {
+    text: "designer",
+    className: "text-opacity",
+    previewClassName: "left-1/2 -translate-x-[38%]",
+  },
   { text: "and" },
-  { text: "outdoor", className: "text-opacity", breakAfter: true },
-  { text: "enthusiast", className: "text-opacity" },
+  {
+    text: "runner",
+    className: "text-opacity",
+    previewClassName: "left-1/2 -translate-x-1/2",
+    breakAfter: true,
+  },
+  { text: "on" },
+  { text: "most" },
+  { text: "days," },
   { text: "based" },
   { text: "in" },
-  { text: "Madeira", className: "text-opacity" },
-  { text: "Island.", className: "text-opacity" },
+  {
+    text: "Madeira Island.",
+    className: "text-opacity",
+    previewClassName: "left-1/2 -translate-x-[46%]",
+  },
 ];
 
 const heroSocials = [
@@ -212,7 +226,7 @@ export default function Home() {
 
             <div className="space-y-5">
               <FadeInHeadline
-                className="font-editorial max-w-[44rem] text-[2rem] leading-[1.45] text-foreground"
+                className="font-editorial max-w-[48rem] text-[2rem] leading-[1.45] text-foreground"
                 tokens={heroHeadline}
               />
               <HeroSocials items={heroSocials} />
