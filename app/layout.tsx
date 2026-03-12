@@ -55,6 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${tiemposText.variable}`}

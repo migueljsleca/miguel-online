@@ -1,10 +1,10 @@
-import Image from "next/image";
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
-import placeholderImage from "../image-placeholder.png";
 import { TextScramble } from "@/components/ui/text-scramble";
+import { getProjects } from "@/lib/projects";
 import FadeInHeadline from "./fade-in-headline";
 import HeroSocials from "./hero-socials";
 import RevealSection from "./reveal-section";
+import SelectedWorkShowcase from "./selected-work-showcase";
 import ThemeToggle from "./theme-toggle";
 
 const navigation = [
@@ -34,33 +34,6 @@ const experience = [
   { studio: "Superside", role: "UX/UI Designer", years: "2024 - Now" },
   { studio: "Independent Practice", role: "Designer", years: "2020 - Now" },
   { studio: "chumbo", role: "Designer", years: "2021 - 2024" },
-];
-
-const selectedWork = [
-  {
-    title: "Signal Foundry",
-    meta: "Personal Work · 2024",
-    art: "ekn",
-    href: "#",
-  },
-  {
-    title: "Inbox Rituals",
-    meta: "Personal Work · 2024",
-    art: "vimeo",
-    href: "#",
-  },
-  {
-    title: "Stone Paths",
-    meta: "Concept Build · 2023",
-    art: "atlas",
-    href: "#",
-  },
-  {
-    title: "Quiet Metrics",
-    meta: "Client Work · 2023",
-    art: "relay",
-    href: "#",
-  },
 ];
 
 const heroNumber2Settings = {
@@ -114,47 +87,6 @@ const heroSocials = [
   },
 ];
 
-type WorkCardProps = {
-  title: string;
-  meta: string;
-  art: string;
-  href: string;
-  tooltipLabel?: string;
-};
-
-function WorkCard({
-  title,
-  meta,
-  art,
-  href,
-  tooltipLabel = "View Case Study",
-}: WorkCardProps) {
-  return (
-    <a
-      className="group flex flex-col gap-3"
-      href={href}
-      aria-label={title}
-      data-cursor-label={tooltipLabel}
-    >
-      <div className="portfolio-card__art" data-art={art}>
-        <Image
-          src={placeholderImage}
-          alt=""
-          fill
-          sizes="(min-width: 768px) 438px, 100vw"
-          className="portfolio-card__image"
-        />
-      </div>
-      <div className="space-y-0.5">
-        <p className="font-editorial text-[1rem] leading-[1.5] text-foreground">
-          {title}
-        </p>
-        <p className="text-[0.875rem] leading-[1.5] text-opacity">{meta}</p>
-      </div>
-    </a>
-  );
-}
-
 function SectionLabel({
   children,
   action,
@@ -187,7 +119,9 @@ function NavLabel({ text }: { text: string }) {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const selectedWork = await getProjects();
+
   return (
     <main
       id="home"
@@ -278,28 +212,8 @@ export default function Home() {
             </div>
           </RevealSection>
 
-          <RevealSection
-            id="selected-work"
-            className="flex flex-col gap-8"
-          >
-            <SectionLabel
-              action={
-                <a
-                  className="portfolio-inline-link font-data text-[0.875rem] uppercase"
-                  href="#selected-work"
-                >
-                  View All
-                </a>
-              }
-            >
-              Selected Work
-            </SectionLabel>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {selectedWork.map((item) => (
-                <WorkCard key={item.title} {...item} />
-              ))}
-            </div>
+          <RevealSection>
+            <SelectedWorkShowcase items={selectedWork} />
           </RevealSection>
 
         </div>
