@@ -14,6 +14,8 @@ export default function CustomCursor() {
     if (!cursor || !label) {
       return;
     }
+    const cursorElement = cursor;
+    const labelElement = label;
 
     const mediaQuery = window.matchMedia(DESKTOP_POINTER_QUERY);
     const root = document.documentElement;
@@ -22,8 +24,8 @@ export default function CustomCursor() {
     const previousBodyCursor = body.style.cursor;
 
     function setMode(mode: "dot" | "tooltip", nextLabel = "") {
-      cursor.dataset.mode = mode;
-      label.textContent = nextLabel;
+      cursorElement.dataset.mode = mode;
+      labelElement.textContent = nextLabel;
     }
 
     function applyPointerMode(isEnabled: boolean) {
@@ -32,7 +34,7 @@ export default function CustomCursor() {
       body.style.cursor = isEnabled ? "none" : previousBodyCursor;
 
       if (!isEnabled) {
-        cursor.dataset.visible = "false";
+        cursorElement.dataset.visible = "false";
         setMode("dot");
       }
     }
@@ -42,8 +44,8 @@ export default function CustomCursor() {
         return;
       }
 
-      cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
-      cursor.dataset.visible = "true";
+      cursorElement.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+      cursorElement.dataset.visible = "true";
 
       const target = event.target instanceof Element ? event.target : null;
       const hoverTarget = target?.closest<HTMLElement>("[data-cursor-label]");
@@ -58,7 +60,23 @@ export default function CustomCursor() {
     }
 
     function hideCursor() {
-      cursor.dataset.visible = "false";
+      cursorElement.dataset.visible = "false";
+      setMode("dot");
+    }
+
+    function handleCursorLabel(event: Event) {
+      if (!mediaQuery.matches) {
+        return;
+      }
+
+      const customEvent = event as CustomEvent<{ label?: string | null }>;
+      const nextLabel = customEvent.detail?.label?.trim();
+
+      if (nextLabel) {
+        setMode("tooltip", nextLabel);
+        return;
+      }
+
       setMode("dot");
     }
 
@@ -66,6 +84,7 @@ export default function CustomCursor() {
 
     window.addEventListener("pointermove", updatePosition, { passive: true });
     window.addEventListener("pointerdown", updatePosition, { passive: true });
+    window.addEventListener("portfolio-cursor-label", handleCursorLabel as EventListener);
     window.addEventListener("blur", hideCursor);
     document.addEventListener("mouseleave", hideCursor);
 
@@ -81,6 +100,10 @@ export default function CustomCursor() {
       body.style.cursor = previousBodyCursor;
       window.removeEventListener("pointermove", updatePosition);
       window.removeEventListener("pointerdown", updatePosition);
+      window.removeEventListener(
+        "portfolio-cursor-label",
+        handleCursorLabel as EventListener,
+      );
       window.removeEventListener("blur", hideCursor);
       document.removeEventListener("mouseleave", hideCursor);
       mediaQuery.removeEventListener("change", handleChange);

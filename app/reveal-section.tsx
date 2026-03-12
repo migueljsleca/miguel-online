@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, HTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 
 type RevealSectionProps = {
@@ -22,6 +22,16 @@ export default function RevealSection({
 }: RevealSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const sharedProps = {
+    id,
+    className: `reveal-section${className ? ` ${className}` : ""}`,
+    "data-visible": isVisible,
+    style: {
+      "--reveal-delay": `${delay}ms`,
+      ...style,
+    } as CSSProperties,
+    ...rest,
+  };
 
   useEffect(() => {
     const node = ref.current;
@@ -51,19 +61,23 @@ export default function RevealSection({
     };
   }, []);
 
+  if (Component === "div") {
+    return (
+      <div
+        ref={ref as RefObject<HTMLDivElement>}
+        {...sharedProps}
+      >
+        {children}
+      </div>
+    );
+  }
+
   return (
-    <Component
-      id={id}
-      ref={ref}
-      className={`reveal-section${className ? ` ${className}` : ""}`}
-      data-visible={isVisible}
-      style={{
-        "--reveal-delay": `${delay}ms`,
-        ...style,
-      } as CSSProperties}
-      {...rest}
+    <section
+      ref={ref as RefObject<HTMLElement>}
+      {...sharedProps}
     >
       {children}
-    </Component>
+    </section>
   );
 }

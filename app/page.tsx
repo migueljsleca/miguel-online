@@ -1,14 +1,15 @@
 import Image from "next/image";
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
 import placeholderImage from "../image-placeholder.png";
+import { TextScramble } from "@/components/ui/text-scramble";
 import FadeInHeadline from "./fade-in-headline";
+import HeroSocials from "./hero-socials";
 import RevealSection from "./reveal-section";
 import ThemeToggle from "./theme-toggle";
 
 const navigation = [
   { label: "Home", href: "#home" },
   { label: "Selected Work", href: "#selected-work" },
-  { label: "Playground", href: "#playground" },
   { label: "About", href: "#about" },
 ];
 
@@ -62,33 +63,6 @@ const selectedWork = [
   },
 ];
 
-const playground = [
-  {
-    title: "Signal Posters",
-    meta: "Typography Studies · 2024",
-    art: "posters",
-    href: "#",
-  },
-  {
-    title: "Coastline Frames",
-    meta: "Motion Snippets · 2024",
-    art: "coast",
-    href: "#",
-  },
-  {
-    title: "Orbit Marks",
-    meta: "Identity Drafts · 2023",
-    art: "orbit",
-    href: "#",
-  },
-  {
-    title: "Field Notes",
-    meta: "Photo Essays · 2023",
-    art: "notes",
-    href: "#",
-  },
-];
-
 const heroNumber2Settings = {
   pageBackground: "var(--background)",
   paperColor: "var(--background)",
@@ -107,6 +81,23 @@ const heroHeadline = [
   { text: "in" },
   { text: "Madeira", className: "text-opacity" },
   { text: "Island.", className: "text-opacity" },
+];
+
+const heroSocials = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/miguel-le%C3%A7a-804abb111/",
+  },
+  { label: "GitHub", href: "https://github.com/migueljsleca" },
+  { label: "X", href: "https://x.com/migueljsleca" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/migueljsleca94/",
+  },
+  {
+    label: "Email",
+    copyValue: "migueljsleca@gmail.com",
+  },
 ];
 
 type WorkCardProps = {
@@ -159,11 +150,26 @@ function SectionLabel({
 }) {
   return (
     <div className="flex items-center justify-between gap-6">
-      <p className="font-data text-[0.75rem] uppercase text-opacity">
+      <p className="font-data text-[0.875rem] uppercase text-opacity">
         {children}
       </p>
       {action}
     </div>
+  );
+}
+
+function NavLabel({ text }: { text: string }) {
+  return (
+    <TextScramble
+      text={text}
+      className="whitespace-nowrap"
+      textClassName="font-data text-[14px] leading-none tracking-[-0.01em] uppercase"
+      idleCharacterClassName="text-current"
+      hoveredCharacterClassName="text-foreground"
+      scrambleCharacterClassName="text-primary scale-110"
+      showUnderline={false}
+      showGlow={false}
+    />
   );
 }
 
@@ -181,7 +187,7 @@ export default function Home() {
               className="portfolio-rail__link"
               href={item.href}
             >
-              {item.label}
+              <NavLabel text={item.label} />
             </a>
           ))}
           <ThemeToggle />
@@ -189,7 +195,7 @@ export default function Home() {
       </aside>
 
       <div className="portfolio-shell mx-auto w-full max-w-[900px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
-        <div className="flex flex-col gap-12 md:gap-20 xl:gap-12">
+        <div className="flex flex-col gap-16 md:gap-20 xl:gap-12">
           <section className="flex flex-col gap-6">
             <RevealSection
               as="div"
@@ -209,6 +215,7 @@ export default function Home() {
                 className="font-editorial max-w-[44rem] text-[2rem] leading-[1.45] text-foreground"
                 tokens={heroHeadline}
               />
+              <HeroSocials items={heroSocials} />
             </div>
           </section>
 
@@ -221,7 +228,7 @@ export default function Home() {
               <div className="space-y-4">
                 {stats.map((item) => (
                   <div key={item.label} className="space-y-0.5">
-                    <p className="text-[0.9375rem] leading-[1.5] text-foreground">
+                    <p className="text-[0.875rem] leading-[1.5] text-foreground">
                       {item.value}
                     </p>
                     <p className="text-[0.875rem] leading-[1.5] text-opacity">
@@ -241,7 +248,7 @@ export default function Home() {
                     className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-0.5"
                   >
                     <div className="space-y-0.5">
-                      <p className="text-[0.9375rem] leading-[1.5] text-foreground">
+                      <p className="text-[0.875rem] leading-[1.5] text-foreground">
                         {item.studio}
                       </p>
                       <p className="text-[0.875rem] leading-[1.5] text-opacity">
@@ -264,7 +271,7 @@ export default function Home() {
             <SectionLabel
               action={
                 <a
-                  className="portfolio-inline-link font-data text-[0.75rem] uppercase"
+                  className="portfolio-inline-link font-data text-[0.875rem] uppercase"
                   href="#selected-work"
                 >
                   View All
@@ -281,18 +288,6 @@ export default function Home() {
             </div>
           </RevealSection>
 
-          <RevealSection id="playground" className="flex flex-col gap-8">
-            <SectionLabel>Playground</SectionLabel>
-            <p className="text-[1rem] leading-[1.5] text-foreground">
-              Personal Work · 2024
-            </p>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {playground.map((item) => (
-                <WorkCard key={item.title} {...item} />
-              ))}
-            </div>
-          </RevealSection>
         </div>
       </div>
     </main>
