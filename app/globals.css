@@ -179,6 +179,7 @@ a {
 .portfolio-rail {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 0.625rem 1rem;
 }
 
@@ -194,15 +195,16 @@ a {
 .portfolio-rail__theme {
   position: relative;
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   appearance: none;
   -webkit-appearance: none;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 32px;
   min-width: 0;
   flex: 0 0 auto;
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -214,7 +216,10 @@ a {
 .portfolio-rail__theme::before {
   content: "";
   position: absolute;
-  inset: 13px 6px;
+  top: 7px;
+  left: 0;
+  width: 32px;
+  height: 18px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--black) 10%, var(--white));
   box-shadow:
@@ -250,8 +255,8 @@ html[data-theme="dark"] .portfolio-rail__theme:focus-visible::before {
 .portfolio-rail__theme-knob {
   position: absolute;
   display: block;
-  top: calc(50% - 7px);
-  left: 8px;
+  top: 9px;
+  left: 2px;
   width: 14px;
   height: 14px;
   overflow: hidden;
@@ -493,7 +498,7 @@ html[data-theme="dark"] .portfolio-rail__theme-knob {
   }
 
   .portfolio-rail__theme {
-    margin-top: 0.45rem;
+    margin-top: 0.25rem;
   }
 }
 
@@ -504,7 +509,7 @@ html[data-theme="dark"] .portfolio-rail__theme-knob {
 
   .portfolio-rail {
     overflow-x: auto;
-    align-items: center;
+    align-items: flex-start;
     padding-bottom: 0.35rem;
   }
 
