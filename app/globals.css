@@ -549,6 +549,12 @@ main#home,
   box-shadow: 0 1px 0 color-mix(in srgb, white 35%, transparent) inset;
 }
 
+html[data-theme="dark"] .portfolio-work-sheet {
+  border-color: #222222;
+  background: #1d1d1d;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
 .portfolio-work-sheet__art {
   position: relative;
   overflow: hidden;
@@ -648,16 +654,6 @@ main#home,
 .project-mdx__list-item {
   font-size: 0.95rem;
   line-height: 1.8;
-}
-
-html[data-theme="dark"] .portfolio-work-sheet {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--tile-bg) 90%, #3a3a3a 10%),
-      var(--tile-bg)
-    );
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
 @media (min-width: 1280px) {
