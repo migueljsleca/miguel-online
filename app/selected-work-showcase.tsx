@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { MDXRemote } from "next-mdx-remote";
 import { createPortal } from "react-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 
 import { createProjectMdxComponents } from "@/components/projects/project-mdx-components";
+import ImageReveal from "@/components/ui/image-tiles";
 import type { ProjectItem } from "@/lib/projects";
-import placeholderImage from "../image-placeholder.png";
 
 type SelectedWorkShowcaseProps = {
   items: ProjectItem[];
@@ -35,11 +34,35 @@ function WorkMeta({
   );
 }
 
+function getWorkLabels(item: ProjectItem) {
+  const labels = [item.category, item.deliverables[0]].filter(
+    (value): value is string => Boolean(value),
+  );
+
+  return Array.from(new Set(labels)).slice(0, 2);
+}
+
 export default function SelectedWorkShowcase({
   items,
 }: SelectedWorkShowcaseProps) {
   const [activeTitle, setActiveTitle] = useState<string | null>(null);
+  const [hoveredPreview, setHoveredPreview] = useState<{
+    image: string;
+    title: string;
+  } | null>(null);
   const canUseDOM = typeof document !== "undefined";
+  const previewX = useMotionValue(0);
+  const previewY = useMotionValue(0);
+  const previewSpringX = useSpring(previewX, {
+    stiffness: 380,
+    damping: 34,
+    mass: 0.45,
+  });
+  const previewSpringY = useSpring(previewY, {
+    stiffness: 380,
+    damping: 34,
+    mass: 0.45,
+  });
 
   const activeItem = useMemo(
     () => items.find((item) => item.title === activeTitle) ?? null,
@@ -52,6 +75,36 @@ export default function SelectedWorkShowcase({
 
   const closeProject = () => {
     setActiveTitle(null);
+  };
+
+  const updateHoverPreview = (
+    event: MouseEvent<HTMLButtonElement>,
+    item: ProjectItem,
+  ) => {
+    if (!item.previewImage) {
+      return;
+    }
+
+    previewX.set(event.clientX - 28);
+    previewY.set(event.clientY - 176);
+
+    setHoveredPreview((current) => {
+      if (
+        current?.title === item.title &&
+        current.image === item.previewImage
+      ) {
+        return current;
+      }
+
+      return {
+        image: item.previewImage,
+        title: item.title,
+      };
+    });
+  };
+
+  const clearHoverPreview = () => {
+    setHoveredPreview(null);
   };
 
   useEffect(() => {
@@ -81,45 +134,55 @@ export default function SelectedWorkShowcase({
   return (
     <>
       <section id="selected-work" className="flex flex-col gap-8">
-        <div className="flex items-center justify-between gap-6">
+        <div className="flex items-center gap-6">
           <p className="font-data text-[0.875rem] uppercase text-opacity">
             Selected Work
           </p>
-          <a
-            className="portfolio-inline-link font-data text-[0.875rem] uppercase"
-            href="#selected-work"
-          >
-            View All
-          </a>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="portfolio-work-list flex flex-col">
           {items.map((item) => (
             <button
               key={item.title}
               type="button"
-              className="portfolio-work-card group flex flex-col gap-3 text-left"
+              className="portfolio-work-card portfolio-work-row text-left"
               onClick={() => openProject(item.title)}
+              onMouseEnter={(event) => updateHoverPreview(event, item)}
+              onMouseMove={(event) => updateHoverPreview(event, item)}
+              onMouseLeave={clearHoverPreview}
+              onBlur={clearHoverPreview}
               aria-label={`Open ${item.title}`}
               aria-expanded={activeTitle === item.title}
-              data-cursor-label="Open Project"
             >
-              <div className="portfolio-card__art" data-art={item.art}>
-                <Image
-                  src={placeholderImage}
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 438px, 100vw"
-                  className="portfolio-card__image"
-                />
-              </div>
-              <div className="space-y-0.5">
-                <p className="font-editorial text-[1rem] leading-[1.5] text-foreground">
+              <div className="portfolio-work-row__title-block">
+                <p className="font-editorial text-[1rem] leading-[1.4] text-foreground transition-colors duration-200">
                   {item.title}
                 </p>
-                <p className="text-[0.875rem] leading-[1.5] text-opacity">
+                <p className="text-[0.78rem] leading-[1.45] text-opacity md:hidden">
                   {item.meta}
                 </p>
+              </div>
+
+              <div className="portfolio-work-row__line" aria-hidden="true">
+                <span className="portfolio-work-row__dot" />
+                <span className="portfolio-work-row__rule" />
+                <span className="portfolio-work-row__dot" />
+              </div>
+
+              <div className="portfolio-work-row__labels">
+                {getWorkLabels(item).map((label, index) => (
+                  <span key={label} className="contents">
+                    {index > 0 ? (
+                      <span
+                        aria-hidden="true"
+                        className="portfolio-work-row__label-divider"
+                      >
+                        ·
+                      </span>
+                    ) : null}
+                    <span className="portfolio-work-row__label">{label}</span>
+                  </span>
+                ))}
               </div>
             </button>
           ))}
@@ -129,6 +192,41 @@ export default function SelectedWorkShowcase({
       {canUseDOM
         ? createPortal(
             <AnimatePresence>
+              {hoveredPreview && !activeItem ? (
+                <motion.span
+                  key={hoveredPreview.title}
+                  aria-hidden="true"
+                  className="pointer-events-none fixed left-0 top-0 z-30 hidden md:block"
+                  style={{
+                    x: previewSpringX,
+                    y: previewSpringY,
+                  }}
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      duration: 0.18,
+                      ease: [0.22, 1, 0.36, 1],
+                    },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.94,
+                    transition: {
+                      duration: 0.12,
+                      ease: [0.4, 0, 0.2, 1],
+                    },
+                  }}
+                >
+                  <ImageReveal
+                    variant="single"
+                    middleImage={hoveredPreview.image}
+                    className="my-0"
+                  />
+                </motion.span>
+              ) : null}
+
               {activeItem ? (
                 <>
                   <motion.button

@@ -1,21 +1,21 @@
 export const figmaPrimitives = {
   white: "#FAFCFD",
-  black: "#151515",
+  black: "#101010",
   accent: "#E54613",
 } as const;
 
 export const figmaTheme = {
   light: {
     background: "#FAFCFD",
-    foreground: "#151515",
+    foreground: "#101010",
     accent: "#E54613",
-    opacity: "#1515158C",
+    opacity: "#1010108C",
     tileBg: "#FBFCFD",
     tileStroke: "#F1F3F4",
     tileFill: "#7C7D7E",
   },
   dark: {
-    background: "#151515",
+    background: "#101010",
     foreground: "#FAFCFD",
     accent: "#E54613",
     opacity: "#FAFCFD8C",

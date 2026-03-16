@@ -7,17 +7,17 @@
   "collections": {
     "primitives": {
       "white": "#FAFCFD",
-      "black": "#151515",
+      "black": "#101010",
       "accent": "#E54613"
     },
     "theme": {
       "light": {
         "background": "#FAFCFD",
-        "foreground": "#151515",
-        "opacity": "#1515158C"
+        "foreground": "#101010",
+        "opacity": "#1010108C"
       },
       "dark": {
-        "background": "#151515",
+        "background": "#101010",
         "foreground": "#FAFCFD",
         "opacity": "#FAFCFD8C"
       }

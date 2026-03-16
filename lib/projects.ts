@@ -23,6 +23,7 @@ type ProjectFrontmatter = {
 
 export type ProjectItem = ProjectFrontmatter & {
   slug: string;
+  previewImage: string;
   source: MDXRemoteSerializeResult;
 };
 
@@ -32,6 +33,20 @@ function normalizeDeliverables(value: unknown): string[] {
   }
 
   return [];
+}
+
+function resolveProjectAssetPath(projectSlug: string, src: string) {
+  if (!src) return "";
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+    return src;
+  }
+
+  return `/project-assets/${projectSlug}/${src.replace(/^\.?\//, "")}`;
+}
+
+function extractPreviewImage(projectSlug: string, content: string) {
+  const match = content.match(/src="([^"]+)"/);
+  return match ? resolveProjectAssetPath(projectSlug, match[1]) : "";
 }
 
 export const getProjects = cache(async (): Promise<ProjectItem[]> => {
@@ -64,6 +79,7 @@ export const getProjects = cache(async (): Promise<ProjectItem[]> => {
         category: frontmatter.category ?? "",
         location: frontmatter.location ?? "",
         deliverables: normalizeDeliverables(frontmatter.deliverables),
+        previewImage: extractPreviewImage(slug, content),
         order: typeof frontmatter.order === "number" ? frontmatter.order : 999,
         source,
       };

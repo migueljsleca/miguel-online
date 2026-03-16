@@ -12,10 +12,10 @@ Resolved values:
 
 | Token | Light | Dark |
 | --- | --- | --- |
-| `background` | `#FAFCFD` | `#151515` |
-| `foreground` | `#151515` | `#FAFCFD` |
+| `background` | `#FAFCFD` | `#101010` |
+| `foreground` | `#101010` | `#FAFCFD` |
 | `accent` | `#E54613` | `#E54613` |
-| `opacity` | `#1515158C` | `#FAFCFD8C` |
+| `opacity` | `#1010108C` | `#FAFCFD8C` |
 | `tileBg` | `#FBFCFD` | `#303030` |
 | `tileStroke` | `#F1F3F4` | `#2A2A2A` |
 | `tileFill` | `#7C7D7E` | `#939495` |
@@ -25,7 +25,7 @@ Primitives:
 | Token | Value |
 | --- | --- |
 | `white` | `#FAFCFD` |
-| `black` | `#151515` |
+| `black` | `#101010` |
 | `accent` | `#E54613` |
 
 Recommended Next.js usage:

@@ -142,7 +142,7 @@ export default async function Home() {
         </nav>
       </aside>
 
-      <div className="portfolio-shell mx-auto w-full max-w-[900px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
+      <div className="portfolio-shell mx-auto w-full max-w-[800px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
         <div className="flex flex-col gap-16 md:gap-20 xl:gap-12">
           <section className="flex flex-col gap-6">
             <RevealSection
