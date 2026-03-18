@@ -31,16 +31,15 @@ const tileFrameStyle = {
   border: '1px solid var(--tile-stroke)',
 } as const;
 
-const fanTileStyle = {
-  backgroundColor: 'var(--tile-bg)',
-  boxShadow:
-    '0 18px 34px color-mix(in srgb, var(--black) 14%, transparent)',
-  border: '1px solid var(--tile-stroke)',
-} as const;
-
 const placeholderStyle = {
   backgroundColor: 'var(--tile-fill)',
 } as const;
+
+const framedTileClassName =
+  'overflow-hidden rounded-[12px] p-[4px]';
+
+const framedImageClassName =
+  'h-full w-full rounded-[8px] object-cover';
 
 function TileMedia({
   image,
@@ -99,7 +98,7 @@ export default function ImageReveal({
     initial: { rotate: 0, x: 0, y: 0 },
     animate: {
       rotate: -8,
-      x: -150,
+      x: 0,
       y: 10,
       transition: {
         type: 'spring',
@@ -109,7 +108,7 @@ export default function ImageReveal({
     },
     hover: {
       rotate: 1,
-      x: -160,
+      x: -10,
       y: 0,
       transition: {
         type: 'spring',
@@ -147,7 +146,7 @@ export default function ImageReveal({
     initial: { rotate: 0, x: 0, y: 0 },
     animate: {
       rotate: -6,
-      x: 200,
+      x: 0,
       y: 20,
       transition: {
         type: 'spring',
@@ -157,7 +156,7 @@ export default function ImageReveal({
     },
     hover: {
       rotate: 3,
-      x: 200,
+      x: 0,
       y: 10,
       transition: {
         type: 'spring',
@@ -177,7 +176,7 @@ export default function ImageReveal({
       >
         <div
           className={joinClasses(
-            'aspect-[19/14] w-full overflow-hidden rounded-[12px] p-[4px]',
+            `aspect-[19/14] w-full ${framedTileClassName}`,
             tileClassName,
           )}
           style={tileFrameStyle}
@@ -186,7 +185,7 @@ export default function ImageReveal({
             image={middleImage ?? leftImage ?? rightImage}
             alt="Preview tile"
             imageClassName={joinClasses(
-              'h-full w-full rounded-[8px] object-cover',
+              framedImageClassName,
               imageClassName,
             )}
             placeholderClassName={placeholderClassName}
@@ -199,7 +198,7 @@ export default function ImageReveal({
   return (
     <motion.div
       className={joinClasses(
-        'relative my-12 flex h-64 w-64 items-center justify-center',
+        'relative my-12 h-[20rem] w-[34rem] max-w-full',
         className,
       )}
       variants={containerVariants}
@@ -208,64 +207,64 @@ export default function ImageReveal({
     >
       <motion.div
         className={joinClasses(
-          'absolute h-48 w-48 origin-bottom-right overflow-hidden rounded-xl',
+          `absolute left-0 top-0 aspect-square w-48 origin-bottom-right ${framedTileClassName}`,
           tileClassName,
         )}
         variants={leftImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...fanTileStyle, zIndex: 30 }}
+        style={{ ...tileFrameStyle, zIndex: 30 }}
       >
         <TileMedia
           image={leftImage}
           alt="Left image"
-            imageClassName={joinClasses(
-              'h-full w-full object-cover p-2',
-              imageClassName,
-            )}
-            placeholderClassName={placeholderClassName}
+          imageClassName={joinClasses(
+            framedImageClassName,
+            imageClassName,
+          )}
+          placeholderClassName={placeholderClassName}
         />
       </motion.div>
 
       <motion.div
         className={joinClasses(
-          'absolute h-48 w-48 origin-bottom-left overflow-hidden rounded-xl',
+          `absolute left-[150px] top-0 aspect-square w-48 origin-bottom-left ${framedTileClassName}`,
           tileClassName,
         )}
         variants={middleImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...fanTileStyle, zIndex: 20 }}
+        style={{ ...tileFrameStyle, zIndex: 20 }}
       >
         <TileMedia
           image={middleImage}
           alt="Middle image"
-            imageClassName={joinClasses(
-              'h-full w-full object-cover p-2',
-              imageClassName,
-            )}
-            placeholderClassName={placeholderClassName}
+          imageClassName={joinClasses(
+            framedImageClassName,
+            imageClassName,
+          )}
+          placeholderClassName={placeholderClassName}
         />
       </motion.div>
 
       <motion.div
         className={joinClasses(
-          'absolute h-48 w-48 origin-bottom-right overflow-hidden rounded-xl',
+          `absolute left-[334px] top-0 aspect-square w-48 origin-bottom-right ${framedTileClassName}`,
           tileClassName,
         )}
         variants={rightImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...fanTileStyle, zIndex: 10 }}
+        style={{ ...tileFrameStyle, zIndex: 10 }}
       >
         <TileMedia
           image={rightImage}
           alt="Right image"
-            imageClassName={joinClasses(
-              'h-full w-full object-cover p-2',
-              imageClassName,
-            )}
-            placeholderClassName={placeholderClassName}
+          imageClassName={joinClasses(
+            framedImageClassName,
+            imageClassName,
+          )}
+          placeholderClassName={placeholderClassName}
         />
       </motion.div>
     </motion.div>

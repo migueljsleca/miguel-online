@@ -10,7 +10,7 @@ import ThemeToggle from "./theme-toggle";
 const navigation = [
   { label: "Home", href: "#home" },
   { label: "Selected Work", href: "#selected-work" },
-  { label: "About", href: "#about" },
+  { label: "About", href: "/about" },
 ];
 
 const stats: { value: React.ReactNode; label: string }[] = [
