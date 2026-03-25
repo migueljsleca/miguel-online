@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { MDXRemote } from "next-mdx-remote";
@@ -170,17 +171,9 @@ export default function SelectedWorkShowcase({
               </div>
 
               <div className="portfolio-work-row__labels">
-                {getWorkLabels(item).map((label, index) => (
-                  <span key={label} className="contents">
-                    {index > 0 ? (
-                      <span
-                        aria-hidden="true"
-                        className="portfolio-work-row__label-divider"
-                      >
-                        ·
-                      </span>
-                    ) : null}
-                    <span className="portfolio-work-row__label">{label}</span>
+                {getWorkLabels(item).map((label) => (
+                  <span key={label} className="portfolio-chip">
+                    {label}
                   </span>
                 ))}
               </div>
@@ -228,110 +221,123 @@ export default function SelectedWorkShowcase({
               ) : null}
 
               {activeItem ? (
-                <>
-                  <motion.button
-                    key="backdrop"
-                    type="button"
-                    aria-label="Close project preview"
-                    className="portfolio-work-backdrop"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    onClick={closeProject}
-                  />
-
-                  <div
-                    className="portfolio-work-stage fixed inset-0 z-50 overflow-y-auto px-4 pb-8 pt-8 md:px-6 md:pb-8 md:pt-8"
-                    onClick={closeProject}
-                  >
-                    <motion.article
-                      role="dialog"
-                      aria-modal="true"
-                      aria-label={`${activeItem.title} preview`}
-                      className="portfolio-work-sheet mx-auto"
-                      initial={{ opacity: 0, y: "110vh" }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{
-                        opacity: 0,
-                        y: "110vh",
-                        transition: {
-                          duration: 0.68,
-                          ease: [0.32, 0.72, 0, 1],
-                        },
-                      }}
-                      transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
-                      onClick={(event) => event.stopPropagation()}
-                    >
-                      <div className="flex items-center justify-between gap-6 border-b border-[color:var(--tile-stroke)] pb-3">
-                        <button
-                          type="button"
-                          className="font-data text-[0.78rem] uppercase tracking-[0.04em] text-foreground transition-colors duration-200 hover:text-primary"
-                          onClick={closeProject}
+                <motion.section
+                  key={activeItem.title}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={`${activeItem.title} preview`}
+                  className="portfolio-project-view fixed inset-0 z-50 overflow-y-auto bg-background"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div className="portfolio-project-view__bar">
+                    <div className="portfolio-project-view__bar-inner">
+                      <button
+                        type="button"
+                        className="portfolio-project-view__back"
+                        onClick={closeProject}
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className="portfolio-project-view__back-icon"
+                          viewBox="0 0 256 256"
+                          width="16"
+                          height="16"
                         >
-                          Close
-                        </button>
-                        <p className="font-data text-[0.7rem] uppercase tracking-[0.06em] text-opacity">
-                          Project Preview
-                        </p>
-                      </div>
-
-                      <div className="pt-5">
-                        <div className="space-y-5">
-                          <div className="space-y-1">
-                            <p className="text-[0.875rem] leading-[1.5] text-opacity">
-                              {activeItem.meta}
-                            </p>
-                            <h2 className="font-editorial text-[2.1rem] leading-[1.04] text-foreground sm:text-[2.4rem]">
-                              {activeItem.title}
-                            </h2>
-                          </div>
-
-                          <dl className="portfolio-work-sheet__meta-row">
-                            <WorkMeta label="Year" value={activeItem.year} />
-                            <WorkMeta
-                              label="Category"
-                              value={activeItem.category}
-                            />
-                            <WorkMeta
-                              label="Location"
-                              value={activeItem.location}
-                            />
-                            <WorkMeta
-                              label="Deliverables"
-                              value={activeItem.deliverables}
-                            />
-                          </dl>
-
-                          <div className="max-w-[42rem] space-y-4">
-                            <p className="font-editorial text-[1.7rem] leading-[1.15] text-foreground sm:text-[2rem]">
-                              {activeItem.summary}
-                            </p>
-                          </div>
-
-                          <motion.div
-                            className="project-mdx"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 16 }}
-                            transition={{
-                              duration: 0.36,
-                              ease: [0.22, 1, 0.36, 1],
-                              delay: 0.08,
-                            }}
-                          >
-                            <MDXRemote
-                              {...activeItem.source}
-                              components={createProjectMdxComponents(
-                                activeItem.slug,
-                              )}
-                            />
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.article>
+                          <rect width="256" height="256" fill="none" />
+                          <line
+                            x1="216"
+                            y1="128"
+                            x2="40"
+                            y2="128"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="16"
+                          />
+                          <polyline
+                            points="112 56 40 128 112 200"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="16"
+                          />
+                        </svg>
+                        <span>Back</span>
+                      </button>
+                    </div>
                   </div>
-                </>
+
+                  <motion.article
+                    className="portfolio-project-view__content"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 16 }}
+                    transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <div className="space-y-8 md:space-y-10">
+                      <header className="space-y-6">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.82rem] leading-[1.4] text-opacity">
+                          <span>{activeItem.year}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{activeItem.category}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{activeItem.location}</span>
+                        </div>
+
+                        <div className="space-y-3">
+                          <h2 className="font-editorial text-[2.5rem] leading-[0.98] tracking-[-0.04em] text-foreground sm:text-[3.4rem]">
+                            {activeItem.title}
+                          </h2>
+                          <p className="max-w-[40rem] text-[1.05rem] leading-[1.7] text-opacity">
+                            {activeItem.summary}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+                          {getWorkLabels(activeItem).map((label) => (
+                            <span key={label} className="portfolio-chip">
+                              {label}
+                            </span>
+                          ))}
+                        </div>
+                      </header>
+
+                      {activeItem.previewImage ? (
+                        <div className="portfolio-project-view__cover">
+                          <img
+                            alt={`${activeItem.title} cover`}
+                            className="portfolio-project-view__cover-image"
+                            src={activeItem.previewImage}
+                          />
+                        </div>
+                      ) : null}
+
+                      <dl className="portfolio-project-view__meta-row">
+                        <WorkMeta label="Year" value={activeItem.year} />
+                        <WorkMeta label="Category" value={activeItem.category} />
+                        <WorkMeta label="Location" value={activeItem.location} />
+                        <WorkMeta
+                          label="Deliverables"
+                          value={activeItem.deliverables}
+                        />
+                      </dl>
+
+                      <div className="portfolio-project-view__body">
+                        <MDXRemote
+                          {...activeItem.source}
+                          components={createProjectMdxComponents(
+                            activeItem.slug,
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </motion.article>
+                </motion.section>
               ) : null}
             </AnimatePresence>,
             document.body,

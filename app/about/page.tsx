@@ -17,6 +17,19 @@ const navigation = [
   { label: "About", href: "/about" },
 ];
 
+const toolStack = [
+  "Figma",
+  "Framer Motion",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "TypeScript",
+  "Node.js",
+  "Vercel",
+  "Shadcn UI",
+  "Spline",
+];
+
 function NavLabel({ text }: { text: string }) {
   return (
     <TextScramble
@@ -55,6 +68,29 @@ export default function AboutPage() {
             variant="fan"
             className="my-0 origin-top-left scale-85"
           />
+        </RevealSection>
+
+        <RevealSection
+          as="section"
+          className="mt-8 max-w-[42rem] space-y-5"
+          delay={120}
+        >
+          <div className="flex items-center">
+            <p className="font-data text-[0.875rem] uppercase text-opacity">
+              Current Tool Stack
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+            {toolStack.map((tool) => (
+              <span
+                key={tool}
+                className="portfolio-chip"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
         </RevealSection>
       </div>
     </main>
