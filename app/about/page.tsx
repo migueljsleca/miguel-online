@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import NavLabel from "@/components/site/nav-label";
 import ImageReveal from "@/components/ui/image-tiles";
-import { TextScramble } from "@/components/ui/text-scramble";
 import RevealSection from "../reveal-section";
 import ThemeToggle from "../theme-toggle";
 
@@ -29,21 +29,6 @@ const toolStack = [
   "Shadcn UI",
   "Spline",
 ];
-
-function NavLabel({ text }: { text: string }) {
-  return (
-    <TextScramble
-      text={text}
-      className="whitespace-nowrap"
-      textClassName="font-data text-[14px] leading-none tracking-[-0.01em] uppercase"
-      idleCharacterClassName="text-current"
-      hoveredCharacterClassName="text-foreground"
-      scrambleCharacterClassName="text-primary scale-110"
-      showUnderline={false}
-      showGlow={false}
-    />
-  );
-}
 
 export default function AboutPage() {
   return (

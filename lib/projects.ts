@@ -88,3 +88,8 @@ export const getProjects = cache(async (): Promise<ProjectItem[]> => {
 
   return projects.sort((a, b) => a.order - b.order);
 });
+
+export const getProjectBySlug = cache(async (slug: string) => {
+  const projects = await getProjects();
+  return projects.find((project) => project.slug === slug) ?? null;
+});

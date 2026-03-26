@@ -1,5 +1,5 @@
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
-import { TextScramble } from "@/components/ui/text-scramble";
+import NavLabel from "@/components/site/nav-label";
 import { getProjects } from "@/lib/projects";
 import FadeInHeadline from "./fade-in-headline";
 import HeroSocials from "./hero-socials";
@@ -101,21 +101,6 @@ function SectionLabel({
       </p>
       {action}
     </div>
-  );
-}
-
-function NavLabel({ text }: { text: string }) {
-  return (
-    <TextScramble
-      text={text}
-      className="whitespace-nowrap"
-      textClassName="font-data text-[14px] leading-none tracking-[-0.01em] uppercase"
-      idleCharacterClassName="text-current"
-      hoveredCharacterClassName="text-foreground"
-      scrambleCharacterClassName="text-primary scale-110"
-      showUnderline={false}
-      showGlow={false}
-    />
   );
 }
 
