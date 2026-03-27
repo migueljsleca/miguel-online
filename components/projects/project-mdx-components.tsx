@@ -1,4 +1,3 @@
-"use client";
 /* eslint-disable @next/next/no-img-element */
 
 import type { ComponentPropsWithoutRef, ReactNode } from "react";

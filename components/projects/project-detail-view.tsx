@@ -1,15 +1,14 @@
-"use client";
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote";
+import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { createProjectMdxComponents } from "@/components/projects/project-mdx-components";
 import NavLabel from "@/components/site/nav-label";
 import ProjectScrollIndicator from "@/components/projects/project-scroll-indicator";
 import ProjectSmoothScroll from "@/components/projects/project-smooth-scroll";
 import { getProjectLabels } from "@/lib/project-labels";
-import type { ProjectItem } from "@/lib/projects";
+import type { ProjectDetail } from "@/lib/projects";
 
 function WorkMeta({
   label,
@@ -32,7 +31,7 @@ function WorkMeta({
   );
 }
 
-export default function ProjectDetailView({ item }: { item: ProjectItem }) {
+export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
   return (
     <main className="portfolio-project-view min-h-screen bg-background text-foreground">
       <ProjectSmoothScroll />
@@ -97,7 +96,7 @@ export default function ProjectDetailView({ item }: { item: ProjectItem }) {
 
           <div className="portfolio-project-view__body">
             <MDXRemote
-              {...item.source}
+              source={item.content}
               components={createProjectMdxComponents(item.slug)}
             />
           </div>

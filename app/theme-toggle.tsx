@@ -2,7 +2,7 @@
 
 import { type MouseEvent, useSyncExternalStore } from "react";
 import type { ThemeMode } from "./theme";
-import { THEME_STORAGE_KEY } from "./theme";
+import { THEME_COOKIE_KEY, THEME_STORAGE_KEY } from "./theme";
 
 function getResolvedTheme(): ThemeMode {
   const rootTheme = document.documentElement.dataset.theme;
@@ -39,6 +39,7 @@ export default function ThemeToggle() {
   function applyTheme(nextTheme: ThemeMode) {
     document.documentElement.dataset.theme = nextTheme;
     window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    document.cookie = `${THEME_COOKIE_KEY}=${nextTheme}; path=/; max-age=31536000; samesite=lax`;
   }
 
   function handleToggle(event: MouseEvent<HTMLButtonElement>) {

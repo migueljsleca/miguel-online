@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import CustomCursor from "./custom-cursor";
 import "./globals.css";
-import { THEME_STORAGE_KEY } from "./theme";
+import { THEME_COOKIE_KEY, THEME_STORAGE_KEY } from "./theme";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -29,11 +30,17 @@ export const metadata: Metadata = {
     "Portfolio homepage for Miguel, a designer and outdoor enthusiast based in Madeira Island.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const cookieTheme = cookieStore.get(THEME_COOKIE_KEY)?.value;
+  const initialTheme =
+    cookieTheme === "dark" || cookieTheme === "light"
+      ? cookieTheme
+      : undefined;
   const themeBootScript = `
     (() => {
       try {
@@ -52,7 +59,7 @@ export default function RootLayout({
   `;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme={initialTheme} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />

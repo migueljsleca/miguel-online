@@ -27,13 +27,8 @@ const stats: { value: React.ReactNode; label: string }[] = [
     ),
     label: "Tools tested",
   },
-  { value: "12,309.6", label: "km covered" },
-];
-
-const experience = [
-  { studio: "Superside", role: "UX/UI Designer", years: "2024 - Now" },
-  { studio: "Independent Practice", role: "Designer", years: "2020 - Now" },
-  { studio: "chumbo", role: "Designer", years: "2021 - 2024" },
+  { value: "12,309.6", label: "km on foot" },
+  { value: "336,573", label: "meters climbed" },
 ];
 
 const heroNumber2Settings = {
@@ -152,48 +147,19 @@ export default async function Home() {
             </div>
           </section>
 
-          <RevealSection
-            id="about"
-            className="grid gap-10 md:grid-cols-[minmax(0,311px)_minmax(0,444px)] md:justify-between"
-          >
-            <div className="space-y-3">
-              <SectionLabel>At a Glance</SectionLabel>
-              <div className="space-y-4">
-                {stats.map((item) => (
-                  <div key={item.label} className="space-y-0.5">
-                    <p className="text-[0.875rem] leading-[1.5] text-foreground">
-                      {item.value}
-                    </p>
-                    <p className="text-[0.875rem] leading-[1.5] text-opacity">
-                      {item.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <SectionLabel>Experience</SectionLabel>
-              <div className="space-y-4">
-                {experience.map((item) => (
-                  <div
-                    key={`${item.studio}-${item.years}`}
-                    className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-0.5"
-                  >
-                    <div className="space-y-0.5">
-                      <p className="text-[0.875rem] leading-[1.5] text-foreground">
-                        {item.studio}
-                      </p>
-                      <p className="text-[0.875rem] leading-[1.5] text-opacity">
-                        {item.role}
-                      </p>
-                    </div>
-                    <p className="pt-0.5 text-right text-[0.875rem] leading-[1.5] text-foreground">
-                      {item.years}
-                    </p>
-                  </div>
-                ))}
-              </div>
+          <RevealSection id="about" className="space-y-3">
+            <SectionLabel>At a Glance</SectionLabel>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+              {stats.map((item) => (
+                <div key={item.label} className="space-y-0.5">
+                  <p className="text-[0.875rem] leading-[1.5] text-foreground">
+                    {item.value}
+                  </p>
+                  <p className="text-[0.875rem] leading-[1.5] text-opacity">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
             </div>
           </RevealSection>
 

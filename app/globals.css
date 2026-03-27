@@ -433,6 +433,38 @@ html[data-theme="dark"] .portfolio-chip {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--white) 1%, transparent);
 }
 
+.portfolio-chip-surface {
+  border: 1px solid color-mix(in srgb, var(--opacity) 9%, transparent);
+  background: color-mix(in srgb, var(--opacity) 7%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--white) 2%, transparent);
+}
+
+html[data-theme="dark"] .portfolio-chip-surface {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--white) 1%, transparent);
+}
+
+.about-experience-mark {
+  filter: brightness(0) saturate(100%);
+}
+
+html[data-theme="dark"] .about-experience-mark {
+  filter: brightness(0) saturate(100%) invert(1);
+}
+
+.about-experience-runner {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+}
+
+.about-experience-runner .hero-halftone {
+  width: 2.45rem;
+  flex: none;
+}
+
 .trail-mark {
   position: relative;
   width: 96px;
