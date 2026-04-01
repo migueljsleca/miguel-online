@@ -9,7 +9,6 @@ import ThemeToggle from "./theme-toggle";
 
 const navigation = [
   { label: "Home", href: "#home" },
-  { label: "Selected Work", href: "#selected-work" },
   { label: "About", href: "/about" },
 ];
 
@@ -44,13 +43,17 @@ const heroHeadline = [
   {
     text: "designer",
     className: "text-opacity",
-    previewClassName: "left-1/2 -translate-x-[38%]",
+    previewOffsetX: 24,
+    previewImage:
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1400&q=80",
   },
   { text: "and" },
   {
     text: "runner",
     className: "text-opacity",
-    previewClassName: "left-1/2 -translate-x-1/2",
+    previewOffsetX: 0,
+    previewImage:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
     breakAfter: true,
   },
   { text: "on" },
@@ -61,7 +64,9 @@ const heroHeadline = [
   {
     text: "Madeira Island.",
     className: "text-opacity",
-    previewClassName: "left-1/2 -translate-x-[46%]",
+    previewOffsetX: 8,
+    previewImage:
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80",
   },
 ];
 
@@ -107,23 +112,27 @@ export default async function Home() {
       id="home"
       className="min-h-screen bg-background text-foreground"
     >
-      <aside className="portfolio-rail-wrap">
-        <nav aria-label="Primary" className="portfolio-rail">
-          {navigation.map((item) => (
-            <a
-              key={item.label}
-              className="portfolio-rail__link"
-              href={item.href}
-            >
-              <NavLabel text={item.label} />
-            </a>
-          ))}
-          <ThemeToggle />
-        </nav>
+      <aside className="site-nav">
+        <div className="site-nav__shell">
+          <nav aria-label="Primary" className="site-nav__inner">
+            <div className="site-nav__links">
+              {navigation.map((item) => (
+                <a
+                  key={item.label}
+                  className="portfolio-rail__link"
+                  href={item.href}
+                >
+                  <NavLabel text={item.label} />
+                </a>
+              ))}
+            </div>
+            <ThemeToggle />
+          </nav>
+        </div>
       </aside>
 
-      <div className="portfolio-shell mx-auto w-full max-w-[800px] px-6 py-6 sm:px-8 md:py-10 xl:px-0 xl:py-12">
-        <div className="flex flex-col gap-16 md:gap-20 xl:gap-12">
+      <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] py-6 md:py-10">
+        <div className="flex flex-col gap-12">
           <section className="flex flex-col gap-6">
             <RevealSection
               as="div"

@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 const navigation = [
   { label: "Home", href: "/" },
-  { label: "Selected Work", href: "/#selected-work" },
   { label: "About", href: "/about" },
 ];
 
@@ -74,18 +73,22 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <aside className="portfolio-rail-wrap">
-        <nav aria-label="Primary" className="portfolio-rail">
-          {navigation.map((item) => (
-            <Link key={item.label} className="portfolio-rail__link" href={item.href}>
-              <NavLabel text={item.label} />
-            </Link>
-          ))}
-          <ThemeToggle />
-        </nav>
+      <aside className="site-nav">
+        <div className="site-nav__shell">
+          <nav aria-label="Primary" className="site-nav__inner">
+            <div className="site-nav__links">
+              {navigation.map((item) => (
+                <Link key={item.label} className="portfolio-rail__link" href={item.href}>
+                  <NavLabel text={item.label} />
+                </Link>
+              ))}
+            </div>
+            <ThemeToggle />
+          </nav>
+        </div>
       </aside>
 
-      <div className="portfolio-shell mx-auto w-full max-w-[800px] px-6 pb-6 pt-0 sm:px-8 md:pb-10 md:pt-0 xl:px-0 xl:pb-12 xl:pt-0">
+      <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] pb-6 pt-0 md:pb-10 md:pt-0 xl:pb-12 xl:pt-0">
         <RevealSection
           as="section"
           className="flex justify-start pt-0"

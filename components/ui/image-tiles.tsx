@@ -1,13 +1,11 @@
 'use client';
-/* eslint-disable @next/next/no-img-element */
-
 import { motion, Variants } from 'framer-motion';
 import React from 'react';
 
 type ImageRevealVariant = 'fan' | 'single';
 
 const tilePlaceholderImage =
-  'https://plus.unsplash.com/premium_photo-1681578990806-c0f5dd8984bd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80';
 
 interface ImageRevealProps {
   leftImage?: string;
@@ -16,7 +14,6 @@ interface ImageRevealProps {
   variant?: ImageRevealVariant;
   className?: string;
   tileClassName?: string;
-  imageClassName?: string;
   placeholderClassName?: string;
 }
 
@@ -36,38 +33,33 @@ const placeholderStyle = {
 } as const;
 
 const framedTileClassName =
-  'overflow-hidden rounded-[12px] p-[4px]';
-
-const framedImageClassName =
-  'h-full w-full rounded-[8px] object-cover';
+  'overflow-hidden rounded-[12px] p-[4px] isolate';
 
 function TileMedia({
   image,
   alt,
-  imageClassName,
   placeholderClassName,
 }: {
   image?: string;
   alt: string;
-  imageClassName?: string;
   placeholderClassName?: string;
 }) {
-  const isPlaceholder = !image;
+  const mediaImage = image ?? tilePlaceholderImage;
 
   return (
     <div
+      role="img"
+      aria-label={alt}
       className={joinClasses(
-        'h-full w-full overflow-hidden rounded-[8px]',
-        isPlaceholder && placeholderClassName,
+        'h-full w-full overflow-hidden rounded-[8px] bg-cover bg-center bg-no-repeat',
+        !image && placeholderClassName,
       )}
-      style={isPlaceholder ? placeholderStyle : undefined}
-    >
-      <img
-        src={image ?? tilePlaceholderImage}
-        alt={alt}
-        className={imageClassName}
-      />
-    </div>
+      style={{
+        ...placeholderStyle,
+        backgroundImage: `url("${mediaImage}")`,
+        clipPath: 'inset(0 round 8px)',
+      }}
+    />
   );
 }
 
@@ -78,7 +70,6 @@ export default function ImageReveal({
   variant = 'fan',
   className,
   tileClassName,
-  imageClassName,
   placeholderClassName,
 }: ImageRevealProps) {
   const containerVariants: Variants = {
@@ -179,15 +170,11 @@ export default function ImageReveal({
             `aspect-[19/14] w-full ${framedTileClassName}`,
             tileClassName,
           )}
-          style={tileFrameStyle}
+          style={{ ...tileFrameStyle, clipPath: 'inset(0 round 12px)' }}
         >
           <TileMedia
             image={middleImage ?? leftImage ?? rightImage}
             alt="Preview tile"
-            imageClassName={joinClasses(
-              framedImageClassName,
-              imageClassName,
-            )}
             placeholderClassName={placeholderClassName}
           />
         </div>
@@ -213,18 +200,18 @@ export default function ImageReveal({
         variants={leftImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...tileFrameStyle, zIndex: 30 }}
+        style={{
+          ...tileFrameStyle,
+          zIndex: 30,
+          clipPath: 'inset(0 round 12px)',
+        }}
       >
-        <TileMedia
-          image={leftImage}
-          alt="Left image"
-          imageClassName={joinClasses(
-            framedImageClassName,
-            imageClassName,
-          )}
-          placeholderClassName={placeholderClassName}
-        />
-      </motion.div>
+          <TileMedia
+            image={leftImage}
+            alt="Left image"
+            placeholderClassName={placeholderClassName}
+          />
+        </motion.div>
 
       <motion.div
         className={joinClasses(
@@ -234,18 +221,18 @@ export default function ImageReveal({
         variants={middleImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...tileFrameStyle, zIndex: 20 }}
+        style={{
+          ...tileFrameStyle,
+          zIndex: 20,
+          clipPath: 'inset(0 round 12px)',
+        }}
       >
-        <TileMedia
-          image={middleImage}
-          alt="Middle image"
-          imageClassName={joinClasses(
-            framedImageClassName,
-            imageClassName,
-          )}
-          placeholderClassName={placeholderClassName}
-        />
-      </motion.div>
+          <TileMedia
+            image={middleImage}
+            alt="Middle image"
+            placeholderClassName={placeholderClassName}
+          />
+        </motion.div>
 
       <motion.div
         className={joinClasses(
@@ -255,18 +242,18 @@ export default function ImageReveal({
         variants={rightImageVariants}
         whileHover="hover"
         animate="animate"
-        style={{ ...tileFrameStyle, zIndex: 10 }}
+        style={{
+          ...tileFrameStyle,
+          zIndex: 10,
+          clipPath: 'inset(0 round 12px)',
+        }}
       >
-        <TileMedia
-          image={rightImage}
-          alt="Right image"
-          imageClassName={joinClasses(
-            framedImageClassName,
-            imageClassName,
-          )}
-          placeholderClassName={placeholderClassName}
-        />
-      </motion.div>
+          <TileMedia
+            image={rightImage}
+            alt="Right image"
+            placeholderClassName={placeholderClassName}
+          />
+        </motion.div>
     </motion.div>
   );
 }
