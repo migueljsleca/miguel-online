@@ -1,8 +1,13 @@
 "use client";
 
 import { type MouseEvent, useSyncExternalStore } from "react";
+import { cn } from "@/lib/utils";
 import type { ThemeMode } from "./theme";
 import { THEME_COOKIE_KEY, THEME_STORAGE_KEY } from "./theme";
+
+type ThemeToggleProps = {
+  variant?: "compact" | "dock";
+};
 
 function getResolvedTheme(): ThemeMode {
   const rootTheme = document.documentElement.dataset.theme;
@@ -20,7 +25,9 @@ function getResolvedTheme(): ThemeMode {
     : "light";
 }
 
-export default function ThemeToggle() {
+export default function ThemeToggle({
+  variant = "compact",
+}: ThemeToggleProps) {
   const theme = useSyncExternalStore(
     (onStoreChange) => {
       const observer = new MutationObserver(onStoreChange);
@@ -43,6 +50,7 @@ export default function ThemeToggle() {
   }
 
   function handleToggle(event: MouseEvent<HTMLButtonElement>) {
+    const button = event.currentTarget;
     const nextTheme: ThemeMode = theme === "dark" ? "light" : "dark";
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -53,10 +61,11 @@ export default function ThemeToggle() {
       typeof document.startViewTransition !== "function"
     ) {
       applyTheme(nextTheme);
+      button.focus();
       return;
     }
 
-    const rect = event.currentTarget.getBoundingClientRect();
+    const rect = button.getBoundingClientRect();
     const x = event.clientX || rect.left + rect.width / 2;
     const y = event.clientY || rect.top + rect.height / 2;
     const radius = Math.hypot(
@@ -76,6 +85,7 @@ export default function ThemeToggle() {
         applyTheme(nextTheme);
       })
       .finished.finally(() => {
+        button.focus();
         document.documentElement.style.removeProperty("--theme-transition-x");
         document.documentElement.style.removeProperty("--theme-transition-y");
         document.documentElement.style.removeProperty("--theme-transition-radius");
@@ -87,7 +97,12 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      className="portfolio-rail__theme"
+      className={cn(
+        "portfolio-rail__theme",
+        variant === "dock" &&
+          "font-data relative z-[1] inline-flex h-8 min-w-[3rem] items-center justify-center rounded-[4px] px-2.5 text-[14px] leading-none tracking-[-0.01em] uppercase text-[color:var(--opacity)] transition-colors duration-200 hover:bg-[color-mix(in_srgb,var(--foreground)_10%,transparent)] hover:text-[color:var(--foreground)] focus-visible:bg-[color-mix(in_srgb,var(--foreground)_10%,transparent)] focus-visible:text-[color:var(--foreground)]",
+      )}
+      data-variant={variant}
       data-mode={theme}
       aria-label={`Switch to ${nextLabel.toLowerCase()} mode`}
       onClick={handleToggle}

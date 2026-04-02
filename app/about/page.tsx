@@ -1,22 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
-import Link from "next/link";
-import AboutRunnerMark from "@/components/about/about-runner-mark";
-import NavLabel from "@/components/site/nav-label";
+import AboutProximityMark from "@/components/about/about-proximity-mark";
 import ImageReveal from "@/components/ui/image-tiles";
 import RevealSection from "../reveal-section";
-import ThemeToggle from "../theme-toggle";
 
 export const metadata: Metadata = {
   title: "About | Miguel",
   description:
     "About Miguel, a designer based in Madeira Island focused on product thinking, interface systems, and disciplined visual craft.",
 };
-
-const navigation = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-];
 
 const toolStack = [
   "Figma",
@@ -73,21 +65,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <aside className="site-nav">
-        <div className="site-nav__shell">
-          <nav aria-label="Primary" className="site-nav__inner">
-            <div className="site-nav__links">
-              {navigation.map((item) => (
-                <Link key={item.label} className="portfolio-rail__link" href={item.href}>
-                  <NavLabel text={item.label} />
-                </Link>
-              ))}
-            </div>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </aside>
-
       <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] pb-6 pt-0 md:pb-10 md:pt-0 xl:pb-12 xl:pt-0">
         <RevealSection
           as="section"
@@ -105,42 +82,37 @@ export default function AboutPage() {
           delay={90}
         >
           <SectionLabel>Experience</SectionLabel>
-          <div className="space-y-6 pt-[0.65rem]">
+          <div className="space-y-5 pt-[0.65rem]">
             {experience.map((item) => (
               <article
                 key={`${item.studio}-${item.years}`}
-                className="flex items-start gap-6"
+                className="flex items-center gap-4"
               >
                 <div
-                  className="portfolio-chip-surface h-[79px] w-[79px] shrink-0 overflow-hidden rounded-[8px]"
+                  className="portfolio-chip-surface h-[56px] w-[56px] shrink-0 overflow-hidden rounded-[8px]"
                 >
                   {item.mark === "runner" ? (
-                    <AboutRunnerMark />
+                    <AboutProximityMark />
                   ) : item.image ? (
                     <img
                       alt={`${item.studio} mark`}
-                      className="about-experience-mark h-full w-full object-contain p-2"
+                      className="about-experience-mark h-full w-full object-contain p-1.5"
                       src={item.image}
                     />
                   ) : null}
                 </div>
 
-                <div className="flex min-w-0 flex-1 flex-col gap-4">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="flex min-w-0 flex-wrap items-start gap-x-2 gap-y-0.5 text-[0.875rem] leading-[1.5]">
-                      <p className="text-foreground">
-                        {item.studio}
-                      </p>
-                      <p className="text-opacity">
-                        {item.role}
-                      </p>
-                    </div>
-                    <p className="shrink-0 text-[0.875rem] leading-[1.5] text-foreground sm:pl-6">
-                      {item.years}
+                <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
+                  <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-0.5 text-[0.875rem] leading-[1.5]">
+                    <p className="text-foreground">
+                      {item.studio}
+                    </p>
+                    <p className="text-opacity">
+                      {item.role}
                     </p>
                   </div>
-                  <p className="w-full text-[0.875rem] leading-[1.55] text-opacity">
-                    {item.summary}
+                  <p className="shrink-0 text-[0.875rem] leading-[1.5] text-foreground">
+                    {item.years}
                   </p>
                 </div>
               </article>

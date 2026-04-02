@@ -93,9 +93,7 @@ export default function SelectedWorkShowcase({
               </div>
 
               <div className="portfolio-work-row__line" aria-hidden="true">
-                <span className="portfolio-work-row__dot" />
                 <span className="portfolio-work-row__rule" />
-                <span className="portfolio-work-row__dot" />
               </div>
 
               <div className="portfolio-work-row__labels">

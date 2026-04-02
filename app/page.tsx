@@ -1,16 +1,9 @@
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
-import NavLabel from "@/components/site/nav-label";
 import { getProjects } from "@/lib/projects";
 import FadeInHeadline from "./fade-in-headline";
 import HeroSocials from "./hero-socials";
 import RevealSection from "./reveal-section";
 import SelectedWorkShowcase from "./selected-work-showcase";
-import ThemeToggle from "./theme-toggle";
-
-const navigation = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "/about" },
-];
 
 const stats: { value: React.ReactNode; label: string }[] = [
   { value: "5+", label: "Years of experience" },
@@ -112,25 +105,6 @@ export default async function Home() {
       id="home"
       className="min-h-screen bg-background text-foreground"
     >
-      <aside className="site-nav">
-        <div className="site-nav__shell">
-          <nav aria-label="Primary" className="site-nav__inner">
-            <div className="site-nav__links">
-              {navigation.map((item) => (
-                <a
-                  key={item.label}
-                  className="portfolio-rail__link"
-                  href={item.href}
-                >
-                  <NavLabel text={item.label} />
-                </a>
-              ))}
-            </div>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </aside>
-
       <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] py-6 md:py-10">
         <div className="flex flex-col gap-12">
           <section className="flex flex-col gap-6">

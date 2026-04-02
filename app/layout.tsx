@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import CustomCursor from "./custom-cursor";
 import "./globals.css";
+import SiteChrome from "@/components/site/site-chrome";
 import { THEME_COOKIE_KEY, THEME_STORAGE_KEY } from "./theme";
 
 const geistSans = Geist({
@@ -67,7 +68,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${tiemposText.variable}`}
       >
-        {children}
+        <SiteChrome>{children}</SiteChrome>
         <CustomCursor />
       </body>
     </html>
