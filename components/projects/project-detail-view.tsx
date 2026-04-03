@@ -36,14 +36,8 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
     <main className="portfolio-project-view min-h-screen bg-background text-foreground">
       <ProjectSmoothScroll />
 
-      <aside className="portfolio-rail-wrap portfolio-project-rail-wrap">
+      <aside className="portfolio-project-rail-wrap">
         <div className="portfolio-project-rail">
-          <nav aria-label="Project" className="portfolio-rail">
-            <Link href="/#selected-work" className="portfolio-rail__link">
-              <NavLabel text="Back" />
-            </Link>
-          </nav>
-
           <ProjectScrollIndicator />
         </div>
       </aside>
@@ -51,6 +45,22 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
       <article className="portfolio-project-view__content">
         <div className="space-y-8 md:space-y-10">
           <header className="space-y-6">
+            <nav aria-label="Project" className="portfolio-project-view__back-nav">
+              <Link
+                href="/#selected-work"
+                className="portfolio-rail__link portfolio-project-view__back-link"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="portfolio-project-view__back-icon"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M228,56A100.11,100.11,0,0,1,128,156H41.66l41.17,41.17a4,4,0,0,1-5.66,5.66l-48-48a4,4,0,0,1,0-5.66l48-48a4,4,0,0,1,5.66,5.66L41.66,148H128a92.1,92.1,0,0,0,92-92,4,4,0,0,1,8,0Z" />
+                </svg>
+                <NavLabel text="Back" />
+              </Link>
+            </nav>
+
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.82rem] leading-[1.4] text-opacity">
               <span>{item.year}</span>
               <span aria-hidden="true">·</span>

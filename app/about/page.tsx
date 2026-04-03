@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import AboutProximityMark from "@/components/about/about-proximity-mark";
-import ImageReveal from "@/components/ui/image-tiles";
 import RevealSection from "../reveal-section";
 
 export const metadata: Metadata = {
@@ -11,16 +10,12 @@ export const metadata: Metadata = {
 };
 
 const toolStack = [
+  "Codex",
   "Figma",
-  "Framer Motion",
-  "React",
   "Next.js",
-  "Tailwind CSS",
-  "TypeScript",
-  "Node.js",
   "Vercel",
-  "Shadcn UI",
-  "Spline",
+  "Webflow",
+  "Shadcn",
 ];
 
 const experience = [
@@ -65,15 +60,18 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] pb-6 pt-0 md:pb-10 md:pt-0 xl:pb-12 xl:pt-0">
+      <div className="portfolio-shell portfolio-shell--page mx-auto w-full max-w-[700px] pb-6 pt-6 md:pb-10 md:pt-10 xl:pb-12 xl:pt-10">
         <RevealSection
           as="section"
           className="flex justify-start pt-0"
         >
-          <ImageReveal
-            variant="fan"
-            className="my-0 origin-top-left scale-85"
-          />
+          <div className="relative h-24 w-24 overflow-hidden rounded-[8px] bg-[color-mix(in_srgb,var(--foreground)_4%,transparent)] isolate">
+            <img
+              alt="Portrait of Miguel"
+              className="block h-full w-full object-cover"
+              src="/about/image2.png"
+            />
+          </div>
         </RevealSection>
 
         <RevealSection
@@ -82,7 +80,7 @@ export default function AboutPage() {
           delay={90}
         >
           <SectionLabel>Experience</SectionLabel>
-          <div className="space-y-5 pt-[0.65rem]">
+          <div className="space-y-2.5 pt-[0.65rem]">
             {experience.map((item) => (
               <article
                 key={`${item.studio}-${item.years}`}
@@ -137,6 +135,16 @@ export default function AboutPage() {
               </span>
             ))}
           </div>
+        </RevealSection>
+
+        <RevealSection
+          as="section"
+          className="mt-12"
+          delay={150}
+        >
+          <p className="text-[0.95rem] leading-[1.7] text-opacity">
+            Miguel Leça. 2026.
+          </p>
         </RevealSection>
       </div>
     </main>

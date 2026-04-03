@@ -116,7 +116,6 @@ export default async function Home() {
             >
               <HalftoneExport
                 settings={heroNumber2Settings}
-                hoverInkColor="var(--accent)"
                 enableInteraction={false}
               />
             </RevealSection>
