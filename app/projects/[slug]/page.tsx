@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import ProjectDetailView from "@/components/projects/project-detail-view";
+import ContentDetailView from "@/components/projects/content-detail-view";
 import { getProjectBySlug, getProjects } from "@/lib/projects";
 
 type ProjectPageProps = {
@@ -19,18 +19,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = await getProjectBySlug(slug);
-
-  if (!project) {
-    return {
-      title: "Project Not Found | Miguel Leca",
-    };
-  }
-
   return {
-    title: `${project.title} | Miguel Leca`,
-    description: project.summary,
+    title: "Miguel Leça",
+    description: "Designer",
   };
 }
 
@@ -42,5 +33,5 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  return <ProjectDetailView item={project} />;
+  return <ContentDetailView item={project} />;
 }

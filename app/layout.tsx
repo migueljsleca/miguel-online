@@ -26,9 +26,8 @@ const tiemposText = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Miguel | Design Portfolio",
-  description:
-    "Portfolio homepage for Miguel, a designer and outdoor enthusiast based in Madeira Island.",
+  title: "Miguel Leça",
+  description: "Designer",
 };
 
 export default async function RootLayout({

@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import AboutProximityMark from "@/components/about/about-proximity-mark";
+import FadeInHeadline, { type HeadlineToken } from "../fade-in-headline";
 import RevealSection from "../reveal-section";
 
 export const metadata: Metadata = {
-  title: "About | Miguel",
-  description:
-    "About Miguel, a designer based in Madeira Island focused on product thinking, interface systems, and disciplined visual craft.",
+  title: "Miguel Leça",
+  description: "Designer",
 };
 
 const toolStack = [
@@ -18,34 +18,37 @@ const toolStack = [
   "Shadcn",
 ];
 
+const aboutHeadline: HeadlineToken[] = [
+  { text: "Usually" },
+  { text: "a" },
+  { text: "designer," },
+  { text: "sometimes" },
+  { text: "a" },
+  { text: "builder," },
+  { text: "always" },
+  { text: "exploring." },
+];
+
 const experience = [
   {
     studio: "Superside",
     role: "UX/UI Designer",
     years: "2024 - Now",
     mark: "image",
-    image:
-      "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5a3dc6ec-260b-4202-99b6-95bae20964b0",
-    summary:
-      "Leading web services work across product, landing pages, and experimentation, with a focus on design systems, execution quality, and digital clarity.",
+    image: "/about/experience-superside.png",
   },
   {
     studio: "Independent Practice",
     role: "Designer",
     years: "2020 - Now",
     mark: "runner",
-    summary:
-      "Partnering with clients on digital products, brand systems, and web experiences that balance product thinking with disciplined visual craft.",
   },
   {
     studio: "chumbo",
     role: "Designer",
     years: "2021 - 2024",
     mark: "image",
-    image:
-      "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/e82272fe-1cfe-4c6a-a3ea-95a7ecf8bf0a",
-    summary:
-      "Worked across brand, interface, and communication projects, building a stronger sense of narrative structure, typography, and deliberate systems thinking.",
+    image: "/about/experience-chumbo.png",
   },
 ];
 
@@ -71,6 +74,34 @@ export default function AboutPage() {
               className="block h-full w-full object-cover"
               src="/about/image2.png"
             />
+          </div>
+        </RevealSection>
+
+        <RevealSection
+          as="section"
+          className="mt-8 flex max-w-[42rem] flex-col gap-5"
+          delay={60}
+        >
+          <FadeInHeadline
+            className="font-editorial max-w-[44rem] text-[1.22rem] leading-[1.2] text-foreground sm:text-[1.5rem]"
+            tokens={aboutHeadline}
+          />
+          <div className="max-w-[44rem] space-y-4 text-[0.95rem] leading-[1.7] text-opacity">
+            <p>
+              I started in graphic design, but naturally found my way into the
+              digital side of things.
+            </p>
+            <p>
+              These days I&apos;m most excited by
+              designing and building for the web, exploring AI, and following
+              &ldquo;what if?&rdquo; ideas until they become something real.
+              I&apos;m curious about people, products, and what technology
+              makes possible.
+            </p>
+            <p>
+              When I&apos;m not online, I&apos;m probably out running in the
+              mountains.
+            </p>
           </div>
         </RevealSection>
 

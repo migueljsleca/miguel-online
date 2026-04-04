@@ -1,9 +1,13 @@
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
+import type { WorkListSectionItem } from "@/components/site/work-list-section";
+import { getClientWorkItems } from "@/lib/client-work";
+import { getProjectLabels } from "@/lib/project-labels";
 import { getProjects } from "@/lib/projects";
 import FadeInHeadline from "./fade-in-headline";
 import HeroSocials from "./hero-socials";
+import NotesShowcase from "./notes-showcase";
 import RevealSection from "./reveal-section";
-import SelectedWorkShowcase from "./selected-work-showcase";
+import WorkPlayShowcase from "./work-play-showcase";
 
 const stats: { value: React.ReactNode; label: string }[] = [
   { value: "5+", label: "Years of experience" },
@@ -99,6 +103,23 @@ function SectionLabel({
 
 export default async function Home() {
   const selectedWork = await getProjects();
+  const clientWork = await getClientWorkItems();
+  const workPlayItems: WorkListSectionItem[] = [
+    ...selectedWork.map((item) => ({
+      href: `/projects/${item.slug}`,
+      title: item.title,
+      meta: item.meta,
+      labels: getProjectLabels(item),
+      previewImage: item.previewImage,
+    })),
+    ...clientWork.map((item) => ({
+      href: `/client-work/${item.slug}`,
+      title: item.title,
+      meta: item.meta,
+      labels: getProjectLabels(item),
+      previewImage: item.previewImage,
+    })),
+  ];
 
   return (
     <main
@@ -146,7 +167,11 @@ export default async function Home() {
           </RevealSection>
 
           <RevealSection>
-            <SelectedWorkShowcase items={selectedWork} />
+            <WorkPlayShowcase items={workPlayItems} />
+          </RevealSection>
+
+          <RevealSection>
+            <NotesShowcase />
           </RevealSection>
 
         </div>

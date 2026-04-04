@@ -6,16 +6,26 @@ import { createPortal } from "react-dom";
 import { useState, type MouseEvent } from "react";
 
 import ImageReveal from "@/components/ui/image-tiles";
-import { getProjectLabels } from "@/lib/project-labels";
-import type { ProjectItem } from "@/lib/projects";
 
-type SelectedWorkShowcaseProps = {
-  items: ProjectItem[];
+export type WorkListSectionItem = {
+  href: string;
+  title: string;
+  meta: string;
+  labels: string[];
+  previewImage?: string;
 };
 
-export default function SelectedWorkShowcase({
+type WorkListSectionProps = {
+  id?: string;
+  title: string;
+  items: WorkListSectionItem[];
+};
+
+export default function WorkListSection({
+  id,
+  title,
   items,
-}: SelectedWorkShowcaseProps) {
+}: WorkListSectionProps) {
   const [hoveredPreview, setHoveredPreview] = useState<{
     image: string;
     title: string;
@@ -36,7 +46,7 @@ export default function SelectedWorkShowcase({
 
   const updateHoverPreview = (
     event: MouseEvent<HTMLAnchorElement>,
-    item: ProjectItem,
+    item: WorkListSectionItem,
   ) => {
     if (!item.previewImage) {
       return;
@@ -66,16 +76,16 @@ export default function SelectedWorkShowcase({
 
   return (
     <>
-      <section id="selected-work" className="flex flex-col gap-3">
-        <p className="font-data text-[0.875rem] uppercase text-opacity">
-          Selected Work
+      <section id={id} className="flex flex-col gap-3">
+        <p className="font-data text-[0.875rem] text-opacity">
+          {title}
         </p>
 
         <div className="portfolio-work-list flex flex-col">
           {items.map((item) => (
             <Link
-              key={item.slug}
-              href={`/projects/${item.slug}`}
+              key={item.href}
+              href={item.href}
               className="portfolio-work-card portfolio-work-row text-left"
               onMouseEnter={(event) => updateHoverPreview(event, item)}
               onMouseMove={(event) => updateHoverPreview(event, item)}
@@ -97,7 +107,7 @@ export default function SelectedWorkShowcase({
               </div>
 
               <div className="portfolio-work-row__labels">
-                {getProjectLabels(item).map((label) => (
+                {item.labels.map((label) => (
                   <span key={label} className="portfolio-chip">
                     {label}
                   </span>

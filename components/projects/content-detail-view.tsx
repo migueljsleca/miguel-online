@@ -10,6 +10,18 @@ import ProjectSmoothScroll from "@/components/projects/project-smooth-scroll";
 import { getProjectLabels } from "@/lib/project-labels";
 import type { ProjectDetail } from "@/lib/projects";
 
+type DetailViewItem = Pick<
+  ProjectDetail,
+  | "slug"
+  | "title"
+  | "summary"
+  | "year"
+  | "category"
+  | "deliverables"
+  | "previewImage"
+  | "content"
+>;
+
 function WorkMeta({
   label,
   value,
@@ -31,7 +43,17 @@ function WorkMeta({
   );
 }
 
-export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
+export default function ContentDetailView({
+  item,
+  backHref = "/#work-play",
+  showMetaRow = true,
+  showLabels = true,
+}: {
+  item: DetailViewItem;
+  backHref?: string;
+  showMetaRow?: boolean;
+  showLabels?: boolean;
+}) {
   return (
     <main className="portfolio-project-view min-h-screen bg-background text-foreground">
       <ProjectSmoothScroll />
@@ -47,7 +69,7 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
           <header className="space-y-6">
             <nav aria-label="Project" className="portfolio-project-view__back-nav">
               <Link
-                href="/#selected-work"
+                href={backHref}
                 className="portfolio-rail__link portfolio-project-view__back-link"
               >
                 <svg
@@ -65,8 +87,6 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
               <span>{item.year}</span>
               <span aria-hidden="true">·</span>
               <span>{item.category}</span>
-              <span aria-hidden="true">·</span>
-              <span>{item.location}</span>
             </div>
 
             <div className="space-y-3">
@@ -78,13 +98,15 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-x-2 gap-y-1.5">
-              {getProjectLabels(item).map((label) => (
-                <span key={label} className="portfolio-chip">
-                  {label}
-                </span>
-              ))}
-            </div>
+            {showLabels ? (
+              <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+                {getProjectLabels(item).map((label) => (
+                  <span key={label} className="portfolio-chip">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </header>
 
           {item.previewImage ? (
@@ -97,12 +119,13 @@ export default function ProjectDetailView({ item }: { item: ProjectDetail }) {
             </div>
           ) : null}
 
-          <dl className="portfolio-project-view__meta-row">
-            <WorkMeta label="Year" value={item.year} />
-            <WorkMeta label="Category" value={item.category} />
-            <WorkMeta label="Location" value={item.location} />
-            <WorkMeta label="Deliverables" value={item.deliverables} />
-          </dl>
+          {showMetaRow ? (
+            <dl className="portfolio-project-view__meta-row">
+              <WorkMeta label="Year" value={item.year} />
+              <WorkMeta label="Category" value={item.category} />
+              <WorkMeta label="Deliverables" value={item.deliverables} />
+            </dl>
+          ) : null}
 
           <div className="portfolio-project-view__body">
             <MDXRemote
