@@ -987,7 +987,7 @@ html[data-theme="dark"] .portfolio-work-backdrop {
 
 .portfolio-project-view__cover {
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 8px;
   background: color-mix(in srgb, var(--opacity) 4%, transparent);
 }
 
@@ -996,13 +996,6 @@ html[data-theme="dark"] .portfolio-work-backdrop {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-}
-
-.portfolio-project-view__meta-row {
-  display: grid;
-  gap: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid color-mix(in srgb, var(--opacity) 10%, transparent);
 }
 
 .portfolio-project-view__body {
@@ -1088,9 +1081,25 @@ html[data-theme="dark"] .portfolio-work-sheet {
   max-width: 42rem;
 }
 
+.project-mdx__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.project-mdx__section + .project-mdx__section {
+  padding-top: 2.25rem;
+}
+
+.project-mdx__section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .project-mdx__paragraph {
-  font-size: 0.95rem;
-  line-height: 1.9;
+  font-size: 1rem;
+  line-height: 1.625rem;
   color: var(--opacity);
 }
 
@@ -1118,6 +1127,7 @@ html[data-theme="dark"] .portfolio-work-sheet {
   overflow: hidden;
   aspect-ratio: 16 / 11;
   padding: 0;
+  border-radius: 8px;
   background-color: color-mix(in srgb, var(--foreground) 10%, var(--background));
 }
 
@@ -1142,8 +1152,8 @@ html[data-theme="dark"] .portfolio-work-sheet {
 }
 
 .project-mdx__list-item {
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.625rem;
 }
 
 @media (min-width: 1280px) {
@@ -1211,9 +1221,6 @@ html[data-theme="dark"] .portfolio-work-sheet {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .portfolio-project-view__meta-row {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 767px) {

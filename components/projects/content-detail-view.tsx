@@ -12,9 +12,12 @@ import type { ProjectDetail } from "@/lib/projects";
 
 type DetailViewItem = Pick<
   ProjectDetail,
+  | "collection"
   | "slug"
   | "title"
   | "summary"
+  | "date"
+  | "headerDate"
   | "year"
   | "category"
   | "deliverables"
@@ -22,38 +25,23 @@ type DetailViewItem = Pick<
   | "content"
 >;
 
-function WorkMeta({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | string[];
-}) {
-  return (
-    <div className="space-y-1.5">
-      <dt className="font-data text-[0.7rem] uppercase tracking-[0.06em] text-opacity">
-        {label}
-      </dt>
-      <dd className="text-[0.875rem] leading-[1.55] text-foreground">
-        {Array.isArray(value)
-          ? value.map((item) => <div key={item}>{item}</div>)
-          : value}
-      </dd>
-    </div>
-  );
-}
-
 export default function ContentDetailView({
   item,
   backHref = "/#work-play",
-  showMetaRow = true,
   showLabels = true,
 }: {
   item: DetailViewItem;
   backHref?: string;
-  showMetaRow?: boolean;
   showLabels?: boolean;
 }) {
+  const headerLabels =
+    item.collection === "notes"
+      ? [item.category].filter(Boolean)
+      : getProjectLabels(item);
+  const headerDate =
+    item.headerDate ||
+    (item.collection === "notes" && item.date ? item.date : item.year);
+
   return (
     <main className="portfolio-project-view min-h-screen bg-background text-foreground">
       <ProjectSmoothScroll />
@@ -84,16 +72,20 @@ export default function ContentDetailView({
             </nav>
 
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.82rem] leading-[1.4] text-opacity">
-              <span>{item.year}</span>
-              <span aria-hidden="true">·</span>
-              <span>{item.category}</span>
+              <span>{headerDate}</span>
+              {headerLabels.map((label) => (
+                <div key={label} className="contents">
+                  <span aria-hidden="true">·</span>
+                  <span>{label}</span>
+                </div>
+              ))}
             </div>
 
             <div className="space-y-3">
-              <h1 className="font-editorial text-[2.5rem] leading-[0.98] tracking-[-0.04em] text-foreground sm:text-[3.4rem]">
+              <h1 className="font-editorial text-[1.875rem] leading-[0.98] tracking-[-0.04em] text-foreground">
                 {item.title}
               </h1>
-              <p className="max-w-[40rem] text-[1.05rem] leading-[1.7] text-opacity">
+              <p className="max-w-[40rem] text-[1rem] leading-[1.625rem] text-opacity">
                 {item.summary}
               </p>
             </div>
@@ -119,18 +111,10 @@ export default function ContentDetailView({
             </div>
           ) : null}
 
-          {showMetaRow ? (
-            <dl className="portfolio-project-view__meta-row">
-              <WorkMeta label="Year" value={item.year} />
-              <WorkMeta label="Category" value={item.category} />
-              <WorkMeta label="Deliverables" value={item.deliverables} />
-            </dl>
-          ) : null}
-
           <div className="portfolio-project-view__body">
             <MDXRemote
               source={item.content}
-              components={createProjectMdxComponents(item.slug)}
+              components={createProjectMdxComponents(item.collection, item.slug)}
             />
           </div>
         </div>

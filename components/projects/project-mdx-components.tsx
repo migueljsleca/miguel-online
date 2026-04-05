@@ -8,28 +8,33 @@ type ProjectImageProps = {
   caption?: string;
 };
 
-function resolveProjectAssetPath(projectSlug: string, src: string) {
+function resolveContentAssetPath(collection: string, slug: string, src: string) {
   if (!src) return "";
-  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+  if (
+    src.startsWith("http://") ||
+    src.startsWith("https://") ||
+    src.startsWith("/")
+  ) {
     return src;
   }
 
-  return `/project-assets/${projectSlug}/${src.replace(/^\.?\//, "")}`;
+  return `/content-assets/${collection}/${slug}/${src.replace(/^\.?\//, "")}`;
 }
 
 function ProjectImage({
-  projectSlug,
+  collection,
+  slug,
   src,
   alt,
   caption,
-}: ProjectImageProps & { projectSlug: string }) {
+}: ProjectImageProps & { collection: string; slug: string }) {
   return (
     <figure className="project-mdx__figure">
       <div className="project-mdx__image-frame">
         <img
           alt={alt}
           className="project-mdx__image"
-          src={resolveProjectAssetPath(projectSlug, src)}
+          src={resolveContentAssetPath(collection, slug, src)}
         />
       </div>
       {caption ? (
@@ -45,6 +50,21 @@ function ProjectGrid({ children }: { children: ReactNode }) {
 
 function TextBlock({ children }: { children: ReactNode }) {
   return <div className="project-mdx__text-block">{children}</div>;
+}
+
+function ContentSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="project-mdx__section">
+      <h3 className="project-mdx__heading">{title}</h3>
+      <div className="project-mdx__section-body">{children}</div>
+    </section>
+  );
 }
 
 function Paragraph(props: ComponentPropsWithoutRef<"p">) {
@@ -63,11 +83,12 @@ function ListItem(props: ComponentPropsWithoutRef<"li">) {
   return <li className="project-mdx__list-item" {...props} />;
 }
 
-export function createProjectMdxComponents(projectSlug: string) {
+export function createProjectMdxComponents(collection: string, slug: string) {
   return {
     img: (props: ComponentPropsWithoutRef<"img">) => (
       <ProjectImage
-        projectSlug={projectSlug}
+        collection={collection}
+        slug={slug}
         alt={props.alt ?? ""}
         src={typeof props.src === "string" ? props.src : ""}
       />
@@ -77,8 +98,9 @@ export function createProjectMdxComponents(projectSlug: string) {
     ul: UnorderedList,
     li: ListItem,
     ProjectImage: (props: ProjectImageProps) => (
-      <ProjectImage projectSlug={projectSlug} {...props} />
+      <ProjectImage collection={collection} slug={slug} {...props} />
     ),
+    ContentSection,
     ProjectGrid,
     TextBlock,
   };

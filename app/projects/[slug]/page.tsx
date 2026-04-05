@@ -33,5 +33,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  return <ContentDetailView item={project} />;
+  return (
+    <ContentDetailView
+      item={project}
+      showLabels={false}
+    />
+  );
 }

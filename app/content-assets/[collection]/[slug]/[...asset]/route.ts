@@ -3,7 +3,7 @@ import path from "path";
 
 import { NextResponse } from "next/server";
 
-const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
+const CONTENT_DIR = path.join(process.cwd(), "content");
 
 const MIME_TYPES: Record<string, string> = {
   ".avif": "image/avif",
@@ -18,19 +18,19 @@ const MIME_TYPES: Record<string, string> = {
 export async function GET(
   _request: Request,
   context: {
-    params: Promise<{ slug: string; asset: string[] }>;
+    params: Promise<{ collection: string; slug: string; asset: string[] }>;
   },
 ) {
-  const { slug, asset } = await context.params;
+  const { collection, slug, asset } = await context.params;
 
   if (!asset.length) {
     return new NextResponse("Not found", { status: 404 });
   }
 
-  const projectRoot = path.join(PROJECTS_DIR, slug);
-  const assetPath = path.resolve(projectRoot, ...asset);
+  const contentRoot = path.join(CONTENT_DIR, collection, slug);
+  const assetPath = path.resolve(contentRoot, ...asset);
 
-  if (!assetPath.startsWith(projectRoot)) {
+  if (!assetPath.startsWith(contentRoot)) {
     return new NextResponse("Not found", { status: 404 });
   }
 

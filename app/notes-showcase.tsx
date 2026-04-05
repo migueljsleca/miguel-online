@@ -1,5 +1,4 @@
 import WorkListSection from "@/components/site/work-list-section";
-import { getProjectLabels } from "@/lib/project-labels";
 import { getNotes } from "@/lib/notes";
 
 export default async function NotesShowcase() {
@@ -13,7 +12,7 @@ export default async function NotesShowcase() {
         href: `/notes/${item.slug}`,
         title: item.title,
         meta: item.meta,
-        labels: getProjectLabels(item),
+        labels: [item.date || item.year].filter(Boolean),
       }))}
     />
   );

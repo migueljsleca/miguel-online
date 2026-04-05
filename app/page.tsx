@@ -1,6 +1,5 @@
 import HalftoneExport from "../experiments/halftone/halftone-export (4).jsx";
 import type { WorkListSectionItem } from "@/components/site/work-list-section";
-import { getClientWorkItems } from "@/lib/client-work";
 import { getProjectLabels } from "@/lib/project-labels";
 import { getProjects } from "@/lib/projects";
 import FadeInHeadline from "./fade-in-headline";
@@ -11,18 +10,6 @@ import WorkPlayShowcase from "./work-play-showcase";
 
 const stats: { value: React.ReactNode; label: string }[] = [
   { value: "5+", label: "Years of experience" },
-  {
-    value: (
-      <svg
-        aria-hidden="true"
-        className="portfolio-inline-icon"
-        viewBox="0 0 256 256"
-      >
-        <path d="M248,128a56,56,0,0,1-95.6,39.6l-.33-.35L92.12,99.55a40,40,0,1,0,0,56.9l8.52-9.62a8,8,0,1,1,12,10.61l-8.69,9.81-.33.35a56,56,0,1,1,0-79.2l.33.35,59.95,67.7a40,40,0,1,0,0-56.9l-8.52,9.62a8,8,0,1,1-12-10.61l8.69-9.81.33-.35A56,56,0,0,1,248,128Z" />
-      </svg>
-    ),
-    label: "Tools tested",
-  },
   { value: "12,309.6", label: "km on foot" },
   { value: "336,573", label: "meters climbed" },
 ];
@@ -103,17 +90,9 @@ function SectionLabel({
 
 export default async function Home() {
   const selectedWork = await getProjects();
-  const clientWork = await getClientWorkItems();
   const workPlayItems: WorkListSectionItem[] = [
     ...selectedWork.map((item) => ({
       href: `/projects/${item.slug}`,
-      title: item.title,
-      meta: item.meta,
-      labels: getProjectLabels(item),
-      previewImage: item.previewImage,
-    })),
-    ...clientWork.map((item) => ({
-      href: `/client-work/${item.slug}`,
       title: item.title,
       meta: item.meta,
       labels: getProjectLabels(item),
@@ -152,7 +131,7 @@ export default async function Home() {
 
           <RevealSection id="about" className="space-y-3">
             <SectionLabel>At a Glance</SectionLabel>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:gap-0.5">
               {stats.map((item) => (
                 <div key={item.label} className="space-y-0.5">
                   <p className="text-[0.875rem] leading-[1.5] text-foreground">

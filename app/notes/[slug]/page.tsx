@@ -36,7 +36,6 @@ export default async function NotePage({ params }: NotePageProps) {
       item={item}
       backHref="/#notes"
       showLabels={false}
-      showMetaRow={false}
     />
   );
 }
